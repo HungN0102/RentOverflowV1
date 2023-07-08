@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i|Nunito:300,300i" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/home-style.css' %}">
+
+        <link rel="shortcut icon" href="#">
+        <!-- Montserrat | Poppins | Inter-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <!-- font-awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        
+        <!-- title -->
+        <title>RentOverflow &mdash; your home, your freedom</title>
+    </head>
+    <body>
+        {% include './navbar.html' %}
+
+        <div class="container">
+            <header class="header">
+                <div class="header-container">
+                    <div class="header__text-box">
+                        <div class="heading-primary">
+                            <span class="heading-primary--main">Simplify your rental search</span>
+                            <span class="heading-primary--sub">Search thousands of listings from top websites all in one place</span>
+                        </div>
+                    </div>
+                    <div class="header__search">
+                        <form action="" method="POST" class="header__form">
+                            {% csrf_token %}
+                            <div class="header__form--box">
+                                <input type="text" name="location" placeholder="e.g Bristol or N1" id="location-search" required>
+                            </div>
+                            <div class="header__form--submit">
+                                <button type="submit" class="btn btn--detail">To Rent</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </header>
+            <div class="about-background"></div>
+            <section class="about">
+                <div class="about-left">
+                    <h3 class="about-left--h3">
+                        Unlock exclusive benefits and offers by subscribing now!
+                    </h3>
+                    <p class="about-left--p">Our top 1%, powered by real reviews!</p>
+                    <div class="about-left--button">
+                        <button class="btn btn--bebe">Subscribe now</button>
+                    </div>
+                </div>
+                <div class="about-right">
+
+                </div>
+            </section>
+            <!-- <section class="category">
+                <span class="category-title">
+                    Explore properties through cities
+                </span>
+                <span class="category-description">
+                    From fam-friendly to next-level luxe and more
+                </span>
+                <div class="category-container">
+                    <div class="category-card category-card--1">
+                        <div class="category-card--title">
+                            <span>London</span>
+                        </div>
+                    </div>
+                    <div class="category-card category-card--2">
+                        <div class="category-card--title">
+                            <span>Manchester</span>
+                        </div>
+                    </div>
+                    <div class="category-card category-card--3">
+                        <div class="category-card--title">
+                            <span>Birmingham</span>
+                        </div>
+                    </div>
+                    <div class="category-card category-card--4">
+                        <div class="category-card--title">
+                            <span>Bristol</span>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+            <section class="map">
+                <div class="" id='map'></div>
+            </section>
+        </div>
+        
+        {% include './footer.html' %}
+        
+        <script>
+            var properties = JSON.parse('{{ properties|escapejs }}');
+            
+            var map = L.map('map').setView([51.505, -0.09], 8);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            properties.features.forEach(function(feature) {
+                var coordinates = feature.geometry.coordinates;
+                var pk = feature.properties.pk;
+                var marker = L.marker([coordinates[1], coordinates[0]], pk).addTo(map);
+                marker.propertyId = pk;
+                // Add a click event listener to the marker
+                marker.on('click', function () {
+                    // Redirect to the property detail page
+                    window.location.href = '/property/' + this.propertyId + '/';
+                });
+            });
+        </script>
+    </body>
+</html>

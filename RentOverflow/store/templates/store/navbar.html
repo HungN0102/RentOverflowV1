@@ -1,0 +1,16 @@
+<nav class="navbar navbar-sticky">
+    <div class="navbar-flex">
+        <a href="{% url 'home' %}" class="navbar-logo">Logo</a>
+        <div class="navbar-hamburger">
+            <i class="navbar-hamburger fa fa-bars" aria-hidden="true"></i>
+        </div>
+        <div class="navbar-main">
+            <ul class='navbar-ul'>
+                <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="{% url 'home' %}">Home</a></li>
+                <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="{% url 'property_list' %}">Search Property</a></li>
+                <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="">Contact Us</a></li>
+                <li class='navbar-li navbar-li-login'><a class='navbar-a' href="">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
