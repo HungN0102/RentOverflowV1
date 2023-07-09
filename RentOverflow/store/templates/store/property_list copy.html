@@ -19,10 +19,6 @@
         <!-- Font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <!-- leaflet -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
         <title>RentOverflow &mdash; your home, your freedom</title>
     </head>
     <body>
@@ -222,7 +218,7 @@
 
             <section class="product-list">
                 <!-- Listing -->
-                {% for property in properties_page %}
+                {% for property in properties %}
                 <div class="listing">
                     <div class="listing-picture">
                         <img src="{% static 'media/images/birmingham.jpg' %}" class="slide" alt="">r
@@ -294,35 +290,34 @@
                 {% endfor %}
                 <!-- End Listing -->
             </section>
-            <section class="navigation">
-                {% if properties_page.has_previous %}
-                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}" class="navigation-box">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                        Back
-                    </a>
-                {% else %}
-                    <a href="" class="navigation-box">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                        Back
-                    </a>
-                {% endif %}
-            
-                <span class="navigation-pages">
-                    Page {{ properties_page.number }} of {{ properties_page.paginator.num_pages }}
-                </span>
-            
-                {% if properties_page.has_next %}
-                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}" class="navigation-box navigation-link navigation-next">Next
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                {% else %}
-                    <a href="" class="navigation-box navigation-link navigation-next">Next
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                {% endif %}
-            </section>
             <section class="sidebar">
-                <div class="map" id='map'></div>
+
+                <div class="map">
+                    <div class="map-picture"></div>
+                    <div class="map-button">
+                        <span><b>FILTER BY MAP</b></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="navigation">
+                <div class="pagination">
+                    {% if properties.has_previous %}
+                    <a href="?page={{ properties.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    
+                    {% for num in properties.paginator.page_range %}
+                        {% if num == properties.number %}
+                            <span class="current-page">{{ num }}</span>
+                        {% elif num > properties.number|add:'-3' and num < properties.number|add:'3' %}
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if properties.has_next %}
+                    <a href="?page={{ properties.next_page_number }}">Next</a>
+                    {% endif %}
+                </div>
             </section>
         </div>
 

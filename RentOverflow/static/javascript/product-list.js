@@ -1,3 +1,4 @@
+// screenwidth
 let screenWidth; 
 
 function handleResize() {
@@ -160,11 +161,9 @@ limitTextBasedOnScreenWidth();
 window.addEventListener('resize', limitTextBasedOnScreenWidth);
 
 
-
-///////////////////// submit when hit enter
-document.getElementById('location-search').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent default form submission
-        document.querySelector('.submit').click(); // Click the submit button
-    }
-});
+// map leaflet
+var map = L.map('map').setView([51.505, -0.09], 8);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);

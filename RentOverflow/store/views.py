@@ -83,12 +83,17 @@ def property_list(request, search=None):
     if max_price_number != 'Choose...' and max_price_number is not None:
         properties = properties.filter(price__lte=max_price_number)
 
+    p = Paginator(properties, 1)
+    page = request.GET.get('page')
+    properties_page = p.get_page(page) 
+
     return render(request, 'store/property_list.html', {'properties': properties,
                                                         'search':search_location,
                                                         'min_bed':min_bed,
                                                         'max_bed':max_bed,
                                                         'min_price':min_price,
-                                                        'max_price':max_price
+                                                        'max_price':max_price,
+                                                        'properties_page': properties_page
                                                         })
 
 def property_info(request, pk):
