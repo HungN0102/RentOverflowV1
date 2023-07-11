@@ -55,6 +55,8 @@ def property_list(request, search=None):
         properties = get_closest_properties(search)
 
     search_location = request.GET.get("location-search")
+    if search_location is None:
+        search_location = search
 
     min_bed = str(request.GET.get("min-bed"))
     min_bed_number = get_number(min_bed)
@@ -67,9 +69,13 @@ def property_list(request, search=None):
     
     max_price = str(request.GET.get("max-price"))
     max_price_number = get_number(max_price)
+
+    sortSelect = str(request.GET.get("sortSelect"))
     
     if search_location != '' and search_location is not None:
         properties = get_closest_properties(search_location)
+        print("*"*20)
+        print(search_location)
 
     if min_bed_number != 'Choose...' and min_bed_number is not None:
         properties = properties.filter(bedrooms__gte=min_bed_number)
@@ -83,6 +89,21 @@ def property_list(request, search=None):
     if max_price_number != 'Choose...' and max_price_number is not None:
         properties = properties.filter(price__lte=max_price_number)
 
+    if sortSelect == 'Featured':
+        pass
+
+    if sortSelect == 'Price: Low to high':
+        properties = Property.objects.all().order_by('price')
+
+    if sortSelect == 'Price: High to low':
+        properties = Property.objects.all().order_by('-price')
+
+    if sortSelect == 'Bedroom: Low to high':
+        properties = Property.objects.all().order_by('bedrooms')
+
+    if sortSelect == 'Bedroom: High to low':
+        properties = Property.objects.all().order_by('-bedrooms')
+
     p = Paginator(properties, 1)
     page = request.GET.get('page')
     properties_page = p.get_page(page) 
@@ -93,6 +114,7 @@ def property_list(request, search=None):
                                                         'max_bed':max_bed,
                                                         'min_price':min_price,
                                                         'max_price':max_price,
+                                                        'sortSelect':sortSelect,
                                                         'properties_page': properties_page
                                                         })
 

@@ -828,3 +828,8 @@ body {
     .navigation-box {
       height: 4rem;
       padding: 0 1rem; } }
+
+
+.hidden {
+  display: none;
+}

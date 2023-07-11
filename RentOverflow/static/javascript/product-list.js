@@ -167,3 +167,14 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
+// sort
+const selectElement = document.getElementById('sort');
+selectElement.addEventListener('change', function () {
+    let sortOption = document.getElementById('sortOption')
+    sortOption.value = selectElement.value
+    sortOption.text = selectElement.value
+
+    const button = document.querySelector('.submit');
+    button.click()
+});

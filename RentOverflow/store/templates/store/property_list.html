@@ -192,6 +192,9 @@
                                         <option value="10 Beds">10 Beds</option>
                                     </select>
                                 </div>
+                                <select name="sortSelect" id="sortSelect" class="hidden">
+                                    <option value="Featured" selected id="sortOption">Featured</option>
+                                </select>
                                 <button type="submit" class="submit">Search</button>
                             </div>
                         </div>
@@ -211,7 +214,7 @@
                 <div class="overview-right">
                     <label for="sort">Sort by:</label>
                     <select name="" id="sort">
-                        <option selected>Featured</option>
+                        <option value="Featured">Featured</option>
                         <option value="Price: Low to high">Price: Low to high</option>
                         <option value="Price: High to low">Price: High to low</option>
                         <option value="Bedroom: Low to high">Bedroom: Low to high</option>
@@ -296,7 +299,7 @@
             </section>
             <section class="navigation">
                 {% if properties_page.has_previous %}
-                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}" class="navigation-box">
+                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}" class="navigation-box">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         Back
                     </a>
@@ -312,7 +315,7 @@
                 </span>
             
                 {% if properties_page.has_next %}
-                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}" class="navigation-box navigation-link navigation-next">Next
+                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}" class="navigation-box navigation-link navigation-next">Next
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 {% else %}

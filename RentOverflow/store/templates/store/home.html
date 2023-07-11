@@ -121,6 +121,57 @@
                     window.location.href = '/property/' + this.propertyId + '/';
                 });
             });
+
+            var polygon = null;
+            var polygonCoordinates = [];
+
+            // Function to handle click events on the map
+            function handleMapClick(event) {
+            var lat = event.latlng.lat;
+            var lng = event.latlng.lng;
+
+            // Add the clicked coordinates to the polygonCoordinates array
+            polygonCoordinates.push([lat, lng]);
+
+            // If a polygon already exists, remove it from the map
+            if (polygon) {
+                map.removeLayer(polygon);
+            }
+
+            // Create a new polygon with the updated coordinates and add it to the map
+            polygon = L.polygon(polygonCoordinates, {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5
+            }).addTo(map);
+            }
+
+            // Function to handle the "Undo" button click event
+            function handleUndoButtonClick() {
+            // Remove the last coordinate from the polygonCoordinates array
+            polygonCoordinates.pop();
+
+            // If a polygon already exists, remove it from the map
+            if (polygon) {
+                map.removeLayer(polygon);
+            }
+
+            // Create a new polygon with the updated coordinates and add it to the map
+            polygon = L.polygon(polygonCoordinates, {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5
+            }).addTo(map);
+            }
+
+            // Attach the click event handler to the map
+            map.on('click', handleMapClick);
+
+            // Create the "Undo" button and attach the click event handler
+            var undoButton = document.createElement('button');
+            undoButton.innerHTML = 'Undo';
+            undoButton.addEventListener('click', handleUndoButtonClick);
+            document.body.appendChild(undoButton);
         </script>
     </body>
 </html>
