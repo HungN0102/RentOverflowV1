@@ -38,9 +38,9 @@
                         {% csrf_token %}
                         <div class="header__form-search">
                             {% if search %}
-                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search" value="{{search|title}}" required>
+                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search" value="{{search|title}}">
                             {% else %}
-                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search" required>
+                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search">
                             {% endif %}
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </div>
@@ -215,7 +215,7 @@
                 <div class="overview-right">
                     <label for="sort">Sort by:</label>
                     <select name="" id="sort">
-                        <option value="Featured">Featured</option>
+                        <option value="Featured">{{sortSelect}}</option>
                         <option value="Price: Low to high">Price: Low to high</option>
                         <option value="Price: High to low">Price: High to low</option>
                         <option value="Bedroom: Low to high">Bedroom: Low to high</option>

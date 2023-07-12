@@ -64,8 +64,6 @@ def property_list(request):
     
     if search_location != '' and search_location is not None:
         properties = get_closest_properties(search_location)
-        print("*"*20)
-        print(search_location)
 
     if min_bed_number != 'Choose...' and min_bed_number is not None:
         properties = properties.filter(bedrooms__gte=min_bed_number)

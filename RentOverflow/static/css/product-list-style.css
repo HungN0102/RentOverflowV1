@@ -833,3 +833,7 @@ body {
 .hidden {
   display: none;
 }
+
+#sort option:checked{
+  background-color: #d3d3d3;
+}
