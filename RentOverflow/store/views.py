@@ -2,7 +2,7 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
 
 from django.urls import reverse
-from django.shortcuts import render, get_object_or_404, redirect,HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponse, HttpResponseRedirect
 
 from django.core.paginator import Paginator
 from django.core.serializers import serialize
@@ -40,7 +40,8 @@ def home(request):
         
         if form.is_valid():
             location = request.POST.get('location').lower()
-            return redirect(reverse('property_list_search', kwargs={'search': location}))
+            url = reverse('property_list')
+            return HttpResponseRedirect(f"{url}?search={location}")
 
     return render(request, 'store/home.html', {'properties':properties,
                                                'form': form})
@@ -48,7 +49,8 @@ def home(request):
 
 
 
-def property_list(request, search=None):
+def property_list(request):
+    search = request.GET.get('search')
     if search is None:
         properties = Property.objects.all()
     else:

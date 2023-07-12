@@ -519,22 +519,89 @@ body {
     .category .category-card--title {
       font-size: 2.5rem; } }
 
-.map {
-  user-select: none;
-  margin-top: 5rem;
-  grid-column: center-start / center-end;
-  height: 70rem;
-  margin-bottom: 5rem;
-  box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.15);
-}
-  #map {
-    height: 100%;
-    width: 100%;
-  }
+      .map {
+        user-select: none;
+        margin-top: 5rem;
+        grid-column: center-start / center-end;
+        height: 70rem;
+        margin-bottom: 5rem;
+        box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.15);
+        position: relative; }
+        .map #map {
+          height: 100%;
+          width: 100%; }
+        .map-buttons {
+          position: absolute;
+          z-index: 1000;
+          bottom: 2%;
+          right: 2%;
+          display: flex;
+          justify-content: space-between;
+          width: 45rem;
+          padding: 1rem 2rem;
+          border-radius: 3px;
+          background-color: #f1f0f0; }
+          .map-buttons button {
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.5rem;
+            background-color: #d3d3d3;
+            padding: 1rem; }
+            .map-buttons button:hover {
+              background-color: #2e8a96;
+              color: white; }
+        .map-edit {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2000;
+          background-color: rgba(0, 0, 0, 0.2);
+          color: white;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 5s;
+          text-align: center; }
+        .map:hover .map-edit {
+          display: none; }
 
-@media (max-width: 625px) {
-  .map {
-    grid-column: full-start / full-end;
-    height: 30rem; } }
-
-
+        .map:focus .map-edit {
+          display: none; }
+      
+      @media (max-width: 800px) {
+        .map-buttons {
+          width: 35rem; }
+          .map-buttons button {
+            font-size: 1.1rem; } }
+      
+      @media (max-width: 625px) {
+        .map {
+          grid-column: full-start / full-end;
+          height: 50rem; } 
+        .map-edit {
+          font-size: 2rem; 
+        } 
+        .map-edit span{
+          margin-top: -5rem;
+        }
+      }
+      
+      @media (max-width: 500px) {
+        .map-buttons {
+          bottom: 0;
+          right: 0; } }
+      
+      @media (max-width: 500px) {
+        .map-buttons {
+          padding: 1rem;
+          width: 100%; }
+          .map-buttons button {
+            font-size: 1.3rem; } }
+      
+      @media (max-width: 400px) {
+        .map-buttons button {
+          font-size: 1.1rem; } }
+      
