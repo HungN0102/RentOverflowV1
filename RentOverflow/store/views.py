@@ -18,18 +18,6 @@ from django.http import JsonResponse
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
-# def home(request):
-#     # Define the reference point
-#     reference_point = Point(x=-0.024445384325855347, y=51.50779721564412,srid=4326)
-#     # Query the three nearest properties
-#     nearest_properties = Property.objects.annotate(
-#         distance=Distance('point_geom', reference_point)
-#     ).order_by('distance')[:2]
-
-#     geojson = serialize('geojson', nearest_properties)
-#     context = {'properties': geojson}
-#     return render(request, 'store/home.html', context)
-
 def home(request):
     properties = Property.objects.all()
     properties = serialize('geojson', properties)
@@ -51,7 +39,7 @@ def home(request):
 
 def property_list(request):
     search = request.GET.get('search')
-    if search is None:
+    if search is None or search == '':
         properties = Property.objects.all()
     else:
         properties = get_closest_properties(search)
