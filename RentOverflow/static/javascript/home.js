@@ -87,32 +87,3 @@ var clearButton = document.querySelector('.map-clear')
 clearButton.addEventListener('click', handleClearButtonClick);
 document.getElementById('map').style.cursor = 'crosshair'
 
-/////////////////// send polygons to product-list
-$(document).on('click', '#view-properties-button', function(e) {
-    e.preventDefault();
-
-    // Convert polygonCoordinates to JSON string
-    var coordinates = JSON.stringify(polygonCoordinates);
-
-    $.ajax({
-        type:'POST',
-        url:'{% url 'property_list' %}',
-        data: {
-            coordinates:coordinates,        
-            csrfmiddlewaretoken: '{{csrf_token}}',
-            action: 'post'
-        },
-
-        success: function(response) {
-            console.log('Coordinates sent to Django');
-            if (response.redirect_url) {
-                var redirectURL = '/property/property-list/?coordinates=' + encodeURIComponent(coordinates);
-                window.location.href = redirectURL;
-            }
-        },
-
-        error: function(xhr, errmsg, err) {
-            console.error('Error sending coordinates to Django');
-        }
-    });
-});

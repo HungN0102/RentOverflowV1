@@ -300,7 +300,7 @@
             </section>
             <section class="navigation">
                 {% if properties_page.has_previous %}
-                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}" class="navigation-box">
+                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         Back
                     </a>
@@ -316,7 +316,7 @@
                 </span>
             
                 {% if properties_page.has_next %}
-                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}" class="navigation-box navigation-link navigation-next">Next
+                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box navigation-link navigation-next">Next
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 {% else %}

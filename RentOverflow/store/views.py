@@ -49,12 +49,11 @@ def property_list(request):
         search_location = search
 
     polygonSearch = request.GET.get('polygonSearch')
-    if polygonSearch is not None:
-        # polygonSearch = json.dumps(polygonSearch)
+    if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
         print("*"*20)
-        print(type(polygonSearch))
-        # polygonSearch = convert_list_to_polygon(polygonSearch)
-        # properties = properties.filter(point_geom__within=polygonSearch)
+        polygonSearchArea = eval(polygonSearch)
+        polygonSearchArea = convert_list_to_polygon(polygonSearchArea)
+        properties = properties.filter(point_geom__within=polygonSearchArea)
 
     min_bed = str(request.GET.get("min-bed"))
     min_bed_number = get_number(min_bed)
@@ -89,16 +88,19 @@ def property_list(request):
         pass
 
     if sortSelect == 'Price: Low to high':
-        properties = Property.objects.all().order_by('price')
+        properties = properties.order_by('price')
 
     if sortSelect == 'Price: High to low':
-        properties = Property.objects.all().order_by('-price')
+        properties = properties.order_by('-price')
 
     if sortSelect == 'Bedroom: Low to high':
-        properties = Property.objects.all().order_by('bedrooms')
+        properties = properties.order_by('bedrooms')
 
     if sortSelect == 'Bedroom: High to low':
-        properties = Property.objects.all().order_by('-bedrooms')
+        properties = properties.order_by('-bedrooms')
+
+    if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
+        properties = properties.filter(point_geom__within=polygonSearchArea)
 
     p = Paginator(properties, 1)
     page = request.GET.get('page')
@@ -111,7 +113,8 @@ def property_list(request):
                                                         'min_price':min_price,
                                                         'max_price':max_price,
                                                         'sortSelect':sortSelect,
-                                                        'properties_page': properties_page
+                                                        'properties_page': properties_page,
+                                                        'polygonSearch':polygonSearch
                                                         })
 
 def property_info(request, pk):
@@ -147,7 +150,6 @@ def get_closest_properties(search):
     return nearest_properties
 
 def convert_list_to_polygon(coordinates):
-    coordinates = json.loads(coordinates)
     # Closing the polygon by repeating the first point
     coordinates.append(coordinates[0])
 
@@ -156,3 +158,4 @@ def convert_list_to_polygon(coordinates):
 
     # Creating the Polygon object
     polygon = Polygon(coordinates)
+    return polygon
