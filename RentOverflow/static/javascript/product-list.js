@@ -176,7 +176,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var polygon = null;
 var polygonCoordinates = [];
 
-// Function to handle click events on the map
+////// Function to handle click events on the map
 function handleMapClick(event) {
     var lat = event.latlng.lat;
     var lng = event.latlng.lng;
@@ -196,7 +196,11 @@ function handleMapClick(event) {
     }).addTo(map);
 }
 
-// Function to handle the "Undo" button click event
+
+// Attach the click event handler to the map
+map.on('click', handleMapClick);
+
+/////// Function to handle the "Undo" button click event
 function handleUndoButtonClick() {
     // Remove the last coordinate from the polygonCoordinates array
     polygonCoordinates.pop();
@@ -214,7 +218,12 @@ function handleUndoButtonClick() {
     }).addTo(map);
 }
 
-// Function to handle the "Clear" button click event
+
+// Attach the click event undo to the map
+var undoButton = document.querySelector('.map-undo')
+undoButton.addEventListener('click', handleUndoButtonClick);
+
+/////////// Function to handle the "Clear" button click event
 function handleClearButtonClick() {
     // If a polygon already exists, remove it from the map
     if (polygon) {
@@ -231,16 +240,30 @@ function handleClearButtonClick() {
     }).addTo(map);
 }
 
-// Attach the click event handler to the map
-map.on('click', handleMapClick);
-
-// Attach the click event undo to the map
-var undoButton = document.querySelector('.map-undo')
-undoButton.addEventListener('click', handleUndoButtonClick);
-
-// Attach the click event undo to the map
+// Attach the click event clear to the map
 var clearButton = document.querySelector('.map-clear')
 clearButton.addEventListener('click', handleClearButtonClick);
+
+/////// Function to handle the "View" button click event
+function handleViewButtonClick() {
+    if (polygonCoordinates.length < 3) {
+        alert('Please have atleast 3 points on the map!')
+    } else {
+        let polygonSearch = document.getElementById('polygonSearch')
+
+        var coordinates = JSON.stringify(polygonCoordinates);
+        polygonSearch.value = coordinates
+    
+        const button = document.querySelector('.submit');
+        button.click()
+    }
+}
+
+// Attach the click event clear to the map
+var submitButton = document.querySelector('.map-submit')
+submitButton.addEventListener('click', handleViewButtonClick);
+
+// crosshair cursor
 document.getElementById('map').style.cursor = 'crosshair'
 
 
@@ -251,6 +274,9 @@ selectElement.addEventListener('change', function () {
     sortOption.value = selectElement.value
     sortOption.text = selectElement.value
 
+    let polygonSearch = document.getElementById('polygonSearch')
+    polygonSearch.value = ''
+    
     const button = document.querySelector('.submit');
     button.click()
 });

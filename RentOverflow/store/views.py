@@ -1,4 +1,4 @@
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, Polygon
 from django.contrib.gis.db.models.functions import Distance
 
 from django.urls import reverse
@@ -47,6 +47,14 @@ def property_list(request):
     search_location = request.GET.get("location-search")
     if search_location is None:
         search_location = search
+
+    polygonSearch = request.GET.get('polygonSearch')
+    if polygonSearch is not None:
+        # polygonSearch = json.dumps(polygonSearch)
+        print("*"*20)
+        print(type(polygonSearch))
+        # polygonSearch = convert_list_to_polygon(polygonSearch)
+        # properties = properties.filter(point_geom__within=polygonSearch)
 
     min_bed = str(request.GET.get("min-bed"))
     min_bed_number = get_number(min_bed)
@@ -137,3 +145,14 @@ def get_closest_properties(search):
     ).order_by('distance')
 
     return nearest_properties
+
+def convert_list_to_polygon(coordinates):
+    coordinates = json.loads(coordinates)
+    # Closing the polygon by repeating the first point
+    coordinates.append(coordinates[0])
+
+    # Converting the coordinates to tuples
+    coordinates = [(coord[1], coord[0]) for coord in coordinates]
+
+    # Creating the Polygon object
+    polygon = Polygon(coordinates)
