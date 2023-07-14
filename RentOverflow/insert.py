@@ -1,31 +1,48 @@
-import os 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "RentOverflow.settings")
-
+import os
+import csv
 import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "RentOverflow.settings")
 django.setup()
 
 from django.contrib.gis.geos import Point
 from store.models import Property
 
-print(os.getcwd())
+# Specify the path to your CSV file
+csv_file_path = "data.csv"
 
-# # Create a new Property object
-# property_obj = Property(
-#     title='Example Property',
-#     price=100000,
-#     address='123 Main St',
-#     description='This is an example property',
-#     propertyType='House',
-#     bedrooms=3,
-#     bathrooms=2,
-#     furnishedType='Unfurnished',
-#     petFriendly='Yes',
-#     smokers='No',
-#     gardens='Backyard',
-#     parking='Garage',
-#     deposit=5000,
-#     point_geom=Point(y=51.477292, x=-0.019888)  # Example coordinates
-# )
+# Open the CSV file
+with open(csv_file_path, "r") as file:
+    reader = csv.DictReader(file)
 
-# Save the Property object to the database
-# property_obj.save()
+    # Define a starting primary key value
+    starting_pk = 1
+
+    # Iterate over each row in the CSV file
+    for row in reader:
+        # Create a new Property object for each row
+        property_obj = Property(
+            pk=starting_pk,  # Assign a primary key value
+            title=row["title"],
+            price=float(row["price"]),
+            address=row["address"],
+            description=row["description"],
+            propertyType=row["propertyType"],
+            bedrooms=int(row["bedrooms"]),
+            bathrooms=int(row["bathrooms"]),
+            furnishedType=row["furnishedType"],
+            petFriendly=row["petFriendly"],
+            smokers=row["smokers"],
+            gardens=row["gardens"],
+            parking=row["parking"],
+            deposit=float(row["deposit"]),
+            point_geom=Point(y=float(row["latitude"]), x=float(row["longitude"]))  # Assuming the latitude and longitude are provided in the CSV
+        )
+
+        # Save the Property object to the database
+        property_obj.save()
+
+        # Increment the primary key value
+        starting_pk += 1
+
+print("Data insertion complete.")
