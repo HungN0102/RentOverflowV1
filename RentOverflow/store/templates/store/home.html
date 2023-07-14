@@ -101,10 +101,21 @@
                     <button class="map-clear">Clear Area</button>
                     <button class="map-submit">View Properties</button>
                 </div>
-                <div class="map-edit">
-                    <span>Draw your search area by placing dots and find properties within</span>
+                <div class="map-edit hidden">
+                    <span class="hidden">Draw your search area by placing dots and find properties within</span>
                 </div>
+                <form class="hidden" action="{% url 'property_list' %}" method="GET">
+                    <!-- Other form fields -->
+                    
+                    <!-- Add the polygonSearch input field -->
+                    <input type="text" id="polygonSearch" name="polygonSearch" value="" class="hidden">
+                    
+                    <!-- Submit button -->
+                    <button type="submit" id="polygonSendButton">Submit</button>
+                  </form>
+                  
             </section>
+
         </div>
         
         {% include './footer.html' %}
@@ -117,7 +128,7 @@
             //     maxZoom: 19,
             //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             // }).addTo(map);
-
+            
             properties.features.forEach(function(feature) {
                 var coordinates = feature.geometry.coordinates;
                 var pk = feature.properties.pk;
@@ -129,6 +140,11 @@
                     window.location.href = '/property/' + this.propertyId + '/';
                 });
             });
+
+// Attach the click event submit to the map
+var submitButton = document.querySelector('.map-submit')
+submitButton.addEventListener('click', handleViewButtonClick);
+
         </script>
     </body>
 </html>

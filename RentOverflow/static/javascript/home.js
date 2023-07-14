@@ -87,3 +87,20 @@ var clearButton = document.querySelector('.map-clear')
 clearButton.addEventListener('click', handleClearButtonClick);
 document.getElementById('map').style.cursor = 'crosshair'
 
+/////// Function to handle the "View" button click event
+function handleViewButtonClick() {
+    if (polygonCoordinates.length < 3) {
+        alert('Please have atleast 3 points on the map!')
+    } else {
+        let polygonSearch = document.querySelector('#polygonSearch');
+        polygonSearch.value = JSON.stringify(polygonCoordinates)
+
+        let polygonSendButton = document.querySelector('#polygonSendButton');
+        polygonSendButton.click()
+    }
+}
+
+// Attach the click event submit to the map
+var submitButton = document.querySelector('.map-submit')
+submitButton.addEventListener('click', handleViewButtonClick);
+

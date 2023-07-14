@@ -259,7 +259,7 @@ function handleViewButtonClick() {
     }
 }
 
-// Attach the click event clear to the map
+// Attach the click event submit to the map
 var submitButton = document.querySelector('.map-submit')
 submitButton.addEventListener('click', handleViewButtonClick);
 

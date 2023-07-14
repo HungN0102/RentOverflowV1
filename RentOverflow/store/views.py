@@ -25,12 +25,11 @@ def home(request):
 
     if request.method == 'POST':
         form = searchForm(request.POST)
-        
         if form.is_valid():
             location = request.POST.get('location').lower()
             url = reverse('property_list')
             return HttpResponseRedirect(f"{url}?search={location}")
-
+        
     return render(request, 'store/home.html', {'properties':properties,
                                                'form': form})
 
@@ -51,6 +50,7 @@ def property_list(request):
     polygonSearch = request.GET.get('polygonSearch')
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
         print("*"*20)
+        print(polygonSearch)
         polygonSearchArea = eval(polygonSearch)
         polygonSearchArea = convert_list_to_polygon(polygonSearchArea)
         properties = properties.filter(point_geom__within=polygonSearchArea)
