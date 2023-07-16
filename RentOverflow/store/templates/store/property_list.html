@@ -227,10 +227,15 @@
                 {% for property in properties_page %}
                 <div class="listing">
                     <div class="listing-picture">
-                        <img src="{% static 'media/images/birmingham.jpg' %}" class="slide" alt="">r
+                        {% for image in property.image_set.all %}
+                            <!-- Assuming each Image has a 'url' property, update this to match your Image model -->
+                            <img src="{% static 'media/' %}{{ image.image }}" class="slide" alt="">
+                        {% endfor %}
+<!-- 
+                        <img src="{% static 'media/images/birmingham.jpg' %}" class="slide" alt="">
                         <img src="{% static 'media/images/london.jpg' %}" class="slide" alt="">
                         <img src="{% static 'media/images/bristol.jpg' %}" class="slide" alt="">
-                        <img src="{% static 'media/images/manchester.jpg' %}" class="slide" alt="">
+                        <img src="{% static 'media/images/manchester.jpg' %}" class="slide" alt=""> -->
 
                         <button class="btn btn-prev" onclick="goPrev(this)">
                             <i class="fa fa-angle-left" aria-hidden="true"></i>
