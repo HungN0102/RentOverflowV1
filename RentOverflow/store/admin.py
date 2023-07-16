@@ -11,10 +11,12 @@ class CustomGeoAdmin(admin.GISModelAdmin):
         }
     }
 
-@admin.register(Property)
-class PropertyAdmin(CustomGeoAdmin):
-    prepopulated_fields = {
-        'slug': ('title',)
-    }
+
+# @admin.register(Property)
+# class PropertyAdmin(CustomGeoAdmin):
+#     prepopulated_fields = {
+#         'slug': ('title',)
+#     }
 
 admin.site.register(Image)
+admin.site.register(Property)

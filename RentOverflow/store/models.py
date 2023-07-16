@@ -3,10 +3,10 @@ from django.urls import reverse
 
 # Create your models here.
 class Property(models.Model):
-    title = models.CharField(max_length=255, db_index=True)
-    slug = models.SlugField(max_length=250, unique=True)
+    title = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=16, decimal_places=2)
-    
+    imageId = models.IntegerField(unique=True)
+
     address = models.CharField(max_length=250, blank=True,null=True)
     description = models.TextField(blank=True,null=True)
     propertyType = models.CharField(max_length=250, blank=True,null=True)
@@ -37,7 +37,7 @@ class Property(models.Model):
         return reverse("property_info", kwargs={"pk": self.pk})
     
 class Image(models.Model):
-    property = models.ForeignKey('Property', on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, to_field='imageId', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='property_images/', blank=True, null=True)
 
     class Meta:

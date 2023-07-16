@@ -9,7 +9,6 @@ from django.core.serializers import serialize
 
 from .forms import searchForm
 from .models import Property
-from .serializers import PropertySerializer 
 
 import re
 import json
@@ -102,7 +101,7 @@ def property_list(request):
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
         properties = properties.filter(point_geom__within=polygonSearchArea)
 
-    p = Paginator(properties, 1)
+    p = Paginator(properties, 20)
     page = request.GET.get('page')
     properties_page = p.get_page(page) 
 
