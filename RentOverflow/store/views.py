@@ -84,7 +84,7 @@ def property_list(request):
         properties = properties.filter(price__lte=max_price_number)
 
     if sortSelect == 'Featured':
-        pass
+        properties = properties.order_by('created_at')
 
     if sortSelect == 'Price: Low to high':
         properties = properties.order_by('price')

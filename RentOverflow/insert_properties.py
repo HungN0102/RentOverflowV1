@@ -21,6 +21,7 @@ with open(csv_file_path, "r", encoding="utf-8") as file:
             title=row["Address"],
             price=float(row["Price"]),
             imageId=row['PropertyId'],
+            propertyUrl = row['Url'],
             address=row["Address"],
             description=row["Description"],
             propertyType=row["PropertyType"],

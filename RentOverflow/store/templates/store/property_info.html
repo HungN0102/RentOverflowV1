@@ -35,10 +35,14 @@
             <section class="gallery">
                 <div class="listing">
                     <div class="listing-picture">
-                        <img src="{% static 'media/images/room1.jpg' %}" class="slide" alt="">
+                        {% for image in property.image_set.all %}
+                            <!-- Assuming each Image has a 'url' property, update this to match your Image model -->
+                            <img src="{% static 'media/' %}{{ image.image }}" class="slide" alt="">
+                        {% endfor %}
+                        <!-- <img src="{% static 'media/images/room1.jpg' %}" class="slide" alt="">
                         <img src="{% static 'media/images/london.jpg' %}" class="slide" alt="">
                         <img src="{% static 'media/images/bristol.jpg' %}" class="slide" alt="">
-                        <img src="{% static 'media/images/manchester.jpg' %}" class="slide" alt="">
+                        <img src="{% static 'media/images/manchester.jpg' %}" class="slide" alt=""> -->
 
                         <button class="btn btn-prev" onclick="goPrev(this)">
                             <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -110,7 +114,7 @@
                 </div>
                 <div class="buttons">
                     <button class="btn btn--share">Share Others</button>
-                    <button class="btn btn--contact">Contact Landlord</button>
+                    <button action='{{ property.propertyUrl}}' id='btn--contact' class="btn btn--contact">Contact Landlord</button>
                 </div>
             </section>
             <section class="description">
@@ -131,5 +135,10 @@
         {% include './footer.html' %}
 
         <script src="{% static 'javascript/item.js' %}"></script>
+        <script type="text/javascript">
+            document.getElementById("btn--contact").onclick = function () {
+                location.href = '{{property.propertyUrl}}';
+            };
+        </script>
     </body>
 </html>

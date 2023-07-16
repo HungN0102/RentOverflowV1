@@ -6,6 +6,7 @@ class Property(models.Model):
     title = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=16, decimal_places=2)
     imageId = models.IntegerField(unique=True)
+    propertyUrl = models.URLField(max_length=255, unique=True)
 
     address = models.CharField(max_length=250, blank=True,null=True)
     description = models.TextField(blank=True,null=True)

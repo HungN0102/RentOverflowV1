@@ -129,17 +129,17 @@
             //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             // }).addTo(map);
             
-            properties.features.forEach(function(feature) {
-                var coordinates = feature.geometry.coordinates;
-                var pk = feature.properties.pk;
-                var marker = L.marker([coordinates[1], coordinates[0]], pk).addTo(map);
-                marker.propertyId = pk;
-                // Add a click event listener to the marker
-                marker.on('click', function () {
-                    // Redirect to the property detail page
-                    window.location.href = '/property/' + this.propertyId + '/';
-                });
-            });
+            // properties.features.forEach(function(feature) {
+            //     var coordinates = feature.geometry.coordinates;
+            //     var pk = feature.properties.pk;
+            //     var marker = L.marker([coordinates[1], coordinates[0]], pk).addTo(map);
+            //     marker.propertyId = pk;
+            //     // Add a click event listener to the marker
+            //     marker.on('click', function () {
+            //         // Redirect to the property detail page
+            //         window.location.href = '/property/' + this.propertyId + '/';
+            //     });
+            // });
 
 // Attach the click event submit to the map
 var submitButton = document.querySelector('.map-submit')
