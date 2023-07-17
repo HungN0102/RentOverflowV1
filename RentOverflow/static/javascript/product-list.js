@@ -133,10 +133,13 @@ function limitTextBasedOnScreenWidth() {
         var text = element.innerText;
         var words = text.split(' ');
         var limitedText = '';
-        if (screenWidth >= 1500) {
-            console
-            if (words.length > 40) {
-                limitedText = words.slice(0, 40).join(' ') + '...';
+        if (screenWidth > 1500) {
+            if (words.length > 70) {
+                limitedText = words.slice(0, 70).join(' ') + '...';
+            }
+        } else if (screenWidth <= 1500) {
+            if (words.length > 50) {
+                limitedText = words.slice(0, 50).join(' ') + '...';
             }
         } else if (screenWidth <= 911) {
             if (words.length > 25) {
