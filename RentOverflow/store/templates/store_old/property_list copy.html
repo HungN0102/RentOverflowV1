@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i|Nunito:300,300i" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/product-list-style.css' %}">
+
+        <!-- bootstrap -->
+        
+        <!-- Montserrat | Poppins | Inter-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lexend+Peta:wght@200;300;400;500;600;700;800;900&family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+        <title>RentOverflow &mdash; your home, your freedom</title>
+    </head>
+    <body>
+        {% include './navbar.html' %}
+
+
+
+
+        <div class="body-container">
+            <section class="header">
+                <div class="header-grid">
+                    <form method="GET" class="header__form">
+                        {% csrf_token %}
+                        <div class="header__form-search">
+                            {% if search %}
+                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search" value="{{search|title}}">
+                            {% else %}
+                                <input type="text" placeholder="e.g Bristol or N1" id="location-search" name="location-search">
+                            {% endif %}
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="header__form-collapse">
+                            <div class="header__form-collapse-section">
+                                <div class="collapse__group collapse__group--min-price">
+                                    <div class="label-group">
+                                        <label id='label-min-price' for="min-price">Min Price
+                                        </label>
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>    
+                                    </div>
+                                    <select id="min-price" class="form-control min-price" name="min-price">
+                                        {% if min_price != 'None' %} 
+                                            <option selected>{{min_price}}</option>
+                                        {% else %} 
+                                            <option selected>Choose...</option>
+                                        {% endif %}
+                                        <option value="£250 PCM">£250 PCM</option>
+                                        <option value="£500 PCM">£500 PCM</option>
+                                        <option value="£750 PCM">£750 PCM</option>
+                                        <option value="£1000 PCM">£1000 PCM</option>
+                                        <option value="£1250 PCM">£1250 PCM</option>
+                                        <option value="£1500 PCM">£1500 PCM</option>
+                                        <option value="£1750 PCM">£1750 PCM</option>
+                                        <option value="£2000 PCM">£2000 PCM</option>
+                                        <option value="£2250 PCM">£2250 PCM</option>
+                                        <option value="£2500 PCM">£2500 PCM</option>
+                                        <option value="£2750 PCM">£2750 PCM</option>
+                                        <option value="£3000 PCM">£3000 PCM</option>
+                                        <option value="£3250 PCM">£3250 PCM</option>
+                                        <option value="£3500 PCM">£3500 PCM</option>
+                                        <option value="£3750 PCM">£3750 PCM</option>
+                                        <option value="£4000 PCM">£4000 PCM</option>
+                                        <option value="£4500 PCM">£4500 PCM</option>
+                                        <option value="£5000 PCM">£5000 PCM</option>
+                                        <option value="£5500 PCM">£5500 PCM</option>
+                                        <option value="£6000 PCM">£6000 PCM</option>
+                                        <option value="£6500 PCM">£6500 PCM</option>
+                                        <option value="£7000 PCM">£7000 PCM</option>
+                                        <option value="£8000 PCM">£8000 PCM</option>
+                                        <option value="£9000 PCM">£9000 PCM</option>
+                                        <option value="£10000 PCM">£10000 PCM</option>
+                                        <option value="£12500 PCM">£12500 PCM</option>
+                                        <option value="£15000 PCM">£15000 PCM</option>
+                                        <option value="£17500 PCM">£17500 PCM</option>
+                                        <option value="£20000 PCM">£20000 PCM</option>
+                                        <option value="£30000 PCM">£30000 PCM</option>
+                                        <option value="£40000 PCM">£40000 PCM</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="collapse__group collapse__group--max-price">
+                                    <div class="label-group">
+                                        <label id='label-max-price' for="max-price">Max Price
+                                        </label>
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </div>
+                                    <select id="max-price" class="form-control max-price" name="max-price">
+                                        {% if max_price != 'None' %} 
+                                            <option selected>{{max_price}}</option>
+                                        {% else %} 
+                                            <option selected>Choose...</option>
+                                        {% endif %}
+                                        <option value="£250 PCM">£250 PCM</option>
+                                        <option value="£500 PCM">£500 PCM</option>
+                                        <option value="£750 PCM">£750 PCM</option>
+                                        <option value="£1000 PCM">£1000 PCM</option>
+                                        <option value="£1250 PCM">£1250 PCM</option>
+                                        <option value="£1500 PCM">£1500 PCM</option>
+                                        <option value="£1750 PCM">£1750 PCM</option>
+                                        <option value="£2000 PCM">£2000 PCM</option>
+                                        <option value="£2250 PCM">£2250 PCM</option>
+                                        <option value="£2500 PCM">£2500 PCM</option>
+                                        <option value="£2750 PCM">£2750 PCM</option>
+                                        <option value="£3000 PCM">£3000 PCM</option>
+                                        <option value="£3250 PCM">£3250 PCM</option>
+                                        <option value="£3500 PCM">£3500 PCM</option>
+                                        <option value="£3750 PCM">£3750 PCM</option>
+                                        <option value="£4000 PCM">£4000 PCM</option>
+                                        <option value="£4500 PCM">£4500 PCM</option>
+                                        <option value="£5000 PCM">£5000 PCM</option>
+                                        <option value="£5500 PCM">£5500 PCM</option>
+                                        <option value="£6000 PCM">£6000 PCM</option>
+                                        <option value="£6500 PCM">£6500 PCM</option>
+                                        <option value="£7000 PCM">£7000 PCM</option>
+                                        <option value="£8000 PCM">£8000 PCM</option>
+                                        <option value="£9000 PCM">£9000 PCM</option>
+                                        <option value="£10000 PCM">£10000 PCM</option>
+                                        <option value="£12500 PCM">£12500 PCM</option>
+                                        <option value="£15000 PCM">£15000 PCM</option>
+                                        <option value="£17500 PCM">£17500 PCM</option>
+                                        <option value="£20000 PCM">£20000 PCM</option>
+                                        <option value="£30000 PCM">£30000 PCM</option>
+                                        <option value="£40000 PCM">£40000 PCM</option>
+                                    </select>
+                                </div>
+        
+                                <div class="collapse__group collapse__group--min-bed">
+                                    <div class="label-group">
+                                        <label id='label-min-bed' for="min-bed">Min Bed
+                                        </label>
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </div>
+                                    
+                                    <select id="min-bed" class="form-control min-bed" name="min-bed">
+                                        {% if min_bed != 'None' %} 
+                                            <option selected>{{min_bed}}</option>
+                                        {% else %} 
+                                            <option selected>Choose...</option>
+                                        {% endif %}
+                                        <option value="1 Bed">1 Bed</option>
+                                        <option value="2 Beds">2 Beds</option>
+                                        <option value="3 Beds">3 Beds</option>
+                                        <option value="4 Beds">4 Beds</option>
+                                        <option value="5 Beds">5 Beds</option>
+                                        <option value="6 Beds">6 Beds</option>
+                                        <option value="7 Beds">7 Beds</option>
+                                        <option value="8 Beds">8 Beds</option>
+                                        <option value="9 Beds">9 Beds</option>
+                                        <option value="10 Beds">10 Beds</option>
+                                    </select>
+                                </div>
+        
+                                <div class="collapse__group collapse__group--max-bed">
+                                    <div class="label-group">
+                                        <label id='label-max-bed' for="max-bed">Max Bed
+                                        </label>
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        
+                                    </div>
+                                    <select id="max-bed" class="form-control max-bed" name="max-bed">
+                                        {% if max_bed != 'None' %} 
+                                            <option selected>{{max_bed}}</option>
+                                        {% else %} 
+                                            <option selected>Choose...</option>
+                                        {% endif %}
+                                        <option value="1 Bed">1 Bed</option>
+                                        <option value="2 Beds">2 Beds</option>
+                                        <option value="3 Beds">3 Beds</option>
+                                        <option value="4 Beds">4 Beds</option>
+                                        <option value="5 Beds">5 Beds</option>
+                                        <option value="6 Beds">6 Beds</option>
+                                        <option value="7 Beds">7 Beds</option>
+                                        <option value="8 Beds">8 Beds</option>
+                                        <option value="9 Beds">9 Beds</option>
+                                        <option value="10 Beds">10 Beds</option>
+                                    </select>
+                                </div>
+                                <select name="sortSelect" id="sortSelect" class="hidden">
+                                    <option value="Featured" selected id="sortOption">Featured</option>
+                                </select>
+                                <input type="text" id="polygonSearch" name="polygonSearch" value="" class="hidden">
+                                <button type="submit" class="submit">Search</button>
+                            </div>
+                        </div>
+                        <div class="header__form-filter">
+                            <span>Filters</span>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="overview">
+                <div class="overview-left">
+                    <h3>Properties for rent in London</h3>
+                    <span>{{ properties|length }} results</span>
+                </div>
+                <div class="overview-right">
+                    <label for="sort">Sort by:</label>
+                    <select name="" id="sort">
+                        <option value="Featured">{{sortSelect}}</option>
+                        <option value="Price: Low to high">Price: Low to high</option>
+                        <option value="Price: High to low">Price: High to low</option>
+                        <option value="Bedroom: Low to high">Bedroom: Low to high</option>
+                        <option value="Bedroom: High to low">Bedroom: High to low</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="product-list">
+                <!-- Listing -->
+                {% for property in properties_page %}
+                <div class="listing">
+                    <div class="listing-picture">
+                        {% for image in property.image_set.all %}
+                            <!-- Assuming each Image has a 'url' property, update this to match your Image model -->
+                            <img src="{% static 'media/' %}{{ image.image }}" class="slide" alt="">
+                        {% endfor %}
+<!-- 
+                        <img src="{% static 'media/images/birmingham.jpg' %}" class="slide" alt="">
+                        <img src="{% static 'media/images/london.jpg' %}" class="slide" alt="">
+                        <img src="{% static 'media/images/bristol.jpg' %}" class="slide" alt="">
+                        <img src="{% static 'media/images/manchester.jpg' %}" class="slide" alt=""> -->
+
+                        <button class="btn btn-prev" onclick="goPrev(this)">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-next" onclick="goNext(this)">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="listing-count">
+                        <span class="listing-count-icon">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        </span>
+                        <span class="listing-count-number">
+
+                        </span>
+                    </div>
+                    <div class="listing-description">
+                        <h3 class="listing-description--1">
+                            <a href="{{property.get_absolute_url}}">{{property.title}}</a>
+                        </h3>
+                        <div class="listing-description--2">
+                            <span class="price-month">
+                                {{property.price}} pcm
+                            </span>
+                            <span class="house-type">
+                                {{property.propertyType}}
+                            </span>
+                            <span class="bedroom-count">
+                                <i class="fa fa-bed" aria-hidden="true"></i>
+                                {{property.bedrooms}}
+                            </span>
+                            <span class="bathroom-count">
+                                <i class="fa fa-bath" aria-hidden="true"></i>
+                                {{property.bathrooms}}
+                            </span>
+                        </div>
+                        <div class="listing-description--3">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            London, United Kingdom
+                        </div>
+                        <div class="listing-description--4">
+                            <span class="text-sub">
+                                {{property.description}}    
+                            </span>
+                        </div>
+                    </div>
+                    <div class="listing-bar">
+                        <div class="listing-date">
+                            <div class="listing-date-today">
+                                ADDED TODAY
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="{{property.get_absolute_url}}" class="btn btn--contact">
+                                    View Details
+                            </a>
+                            <button class="btn btn--heart">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- End Listing -->
+            </section>
+            <section class="navigation">
+                {% if properties_page.has_previous %}
+                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        Back
+                    </a>
+                {% else %}
+                    <a href="" class="navigation-box">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        Back
+                    </a>
+                {% endif %}
+            
+                <span class="navigation-pages">
+                    Page {{ properties_page.number }} of {{ properties_page.paginator.num_pages }}
+                </span>
+            
+                {% if properties_page.has_next %}
+                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box navigation-link navigation-next">Next
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                {% else %}
+                    <a href="" class="navigation-box navigation-link navigation-next">Next
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+            </section>
+            <section class="map">	
+                <div class="map-sticky">	
+                    <div class="" id='map'>	
+                        <div class="map-edit">	
+                            <span>Draw your search area with dots and find properties within</span>	
+                        </div>	
+                    </div>	
+                    <div class="map-buttons">	
+                        <button class="map-undo">Remove Last Point</button>	
+                        <button class="map-clear">Clear Area</button>	
+                        <button class="map-submit">View Properties</button>	
+                    </div>	
+                </div>	
+            </section>
+        </div>
+
+        {% include './footer.html' %}
+        <script src="{% static 'javascript/product-list.js' %}"></script>
+    </body>
+</html>

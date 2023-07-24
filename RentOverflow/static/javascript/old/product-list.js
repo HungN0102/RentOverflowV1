@@ -24,27 +24,6 @@ function handleResize() {
         labelMinBed.textContent ='Min Bed'
         labelMaxBed.textContent ='Max Bed'
     }
-
-    const labelAddedDate = document.querySelector('#label-added-date');
-    const labelPropertyType = document.querySelector('#label-property-type');
-    const labelPetFriendly = document.querySelector('#label-pet-friendly');
-    const labelParking = document.querySelector('#label-parking');
-    const labelGarden = document.querySelector('#label-garden');
-    const labelFurnishType = document.querySelector('#label-furnish-type');
-
-    const AddedDate = document.querySelector('#added-date');
-    const PropertyType = document.querySelector('#property-type');
-    const PetFriendly = document.querySelector('#pet-friendly');
-    const Parking = document.querySelector('#parking');
-    const Garden = document.querySelector('#garden');
-    const FurnishType = document.querySelector('#furnish-type');
-
-    labelAddedDate.textContent = (AddedDate.value === 'Choose...') ? 'Added Date' :  AddedDate.value;
-    labelPropertyType.textContent = (PropertyType.value === 'Choose...') ? 'Property Type' : PropertyType.value;
-    labelPetFriendly.textContent = (PetFriendly.value === 'Choose...') ? 'Pet Friendly' : PetFriendly.value;
-    labelParking.textContent = (Parking.value === 'Choose...') ? 'Parking' : Parking.value;
-    labelGarden.textContent = (Garden.value === 'Choose...') ? 'Garden' : Garden.value;
-    labelFurnishType.textContent = (FurnishType.value === 'Choose...') ? 'Furnish Type' : FurnishType.value;
 }
 
 handleResize();
@@ -64,18 +43,15 @@ filterBtn = document.querySelector(".header__form-filter");
 filterBtn.onclick = function() {
     var collapseSec = document.querySelector('.header__form-collapse');
     collapseSec.classList.toggle('active');
-
-    var extraSec = document.querySelector(".header__form-extra");
-    extraSec.classList.toggle('active');
 }
 
 // label show selected option
 const selects = document.querySelectorAll('.form-control');
 selects.forEach((select) => {
-    const group = select.closest('.form__group');
+    const group = select.closest('.collapse__group');
     const label = group.querySelector('label');
 
-    select.addEventListener('input', () => {
+    select.addEventListener('change', () => {
         if ((screenWidth <= 1000) && (select.value !== 'Choose...') && (select.classList.contains('min-price')))  {
             label.textContent = 'From ' + select.value + ' PCM';
         } else if ((screenWidth <= 1000) && (select.value !== 'Choose...') && (select.classList.contains('max-price')))  {
@@ -84,23 +60,7 @@ selects.forEach((select) => {
             label.textContent = 'From ' + select.value;
         } else if ((screenWidth <= 1000) && (select.value !== 'Choose...') && (select.classList.contains('max-bed')))  {
             label.textContent = 'To ' + select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('added-date')))  {
-            label.textContent = select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('property-type')))  {
-            label.textContent = select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('pet-friendly')))  {
-            label.textContent = select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('parking')))  {
-            label.textContent = select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('garden')))  {
-            label.textContent = select.value;
-        } else if ((select.value !== 'Choose...') && (select.classList.contains('furnish-type')))  {
-            label.textContent = select.value;
-        } 
-        
-        
-        
-        else if ((screenWidth <= 1000) && (select.value === 'Choose...') && (select.classList.contains('min-price')))  {
+        } else if ((screenWidth <= 1000) && (select.value === 'Choose...') && (select.classList.contains('min-price')))  {
             label.textContent = 'Min Price'
         } else if ((screenWidth <= 1000) && (select.value === 'Choose...') && (select.classList.contains('max-price')))  {
             label.textContent = 'Max Price'
@@ -108,34 +68,10 @@ selects.forEach((select) => {
             label.textContent = 'Min Bed'
         } else if ((screenWidth <= 1000) && (select.value === 'Choose...') && (select.classList.contains('max-bed')))  {
             label.textContent = 'Max Bed'
-        } else if ((select.value === 'Choose...') && (select.classList.contains('added-date')))  {
-            label.textContent = 'Added Date';
-        } else if ((select.value === 'Choose...') && (select.classList.contains('property-type')))  {
-            label.textContent = 'Property Type';
-        } else if ((select.value === 'Choose...') && (select.classList.contains('pet-friendly')))  {
-            label.textContent = 'Pet Friendly';
-        } else if ((select.value === 'Choose...') && (select.classList.contains('parking')))  {
-            label.textContent = 'Parking';
-        } else if ((select.value === 'Choose...') && (select.classList.contains('garden')))  {
-            label.textContent = 'Garden';
-        } else if ((select.value === 'Choose...') && (select.classList.contains('furnish-type')))  {
-            label.textContent = 'Furnish Type'
         } 
     })
 })
 
-// reset filter
-const resetFilter = document.querySelector('.header__form-btn--clear')
-resetFilter.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    const selects = document.querySelectorAll('.form-control');
-    selects.forEach(select => {
-        select.selectedIndex = 0
-        // Trigger the input event to update the labels
-        select.dispatchEvent(new Event('input'));
-    })
-})
 
 // sliding pictures
 
@@ -188,46 +124,6 @@ listings.forEach((listing) => {
     });
 });
 
-// // shorten text in text-sub
-// function limitTextBasedOnScreenWidth() {
-//     var textSubElements = document.getElementsByClassName('text-sub');
-//     var screenWidth = window.innerWidth;
-    
-//     Array.from(textSubElements).forEach(function(element) {
-//         var text = element.innerText;
-//         var words = text.split(' ');
-//         var limitedText = '';
-//         if (screenWidth > 1500) {
-//             if (words.length > 70) {
-//                 limitedText = words.slice(0, 70).join(' ') + '...';
-//             }
-//         } else if (screenWidth <= 911) {
-//             if (words.length > 25) {
-//                 limitedText = words.slice(0, 20).join(' ') + '...';
-//             }
-//         } else if (screenWidth <= 1100) {
-//             if (words.length > 30) {
-//                 limitedText = words.slice(0, 30).join(' ') + '...';
-//             }
-//         } else if (screenWidth <= 1500) {
-//             if (words.length > 65) {
-//                 limitedText = words.slice(0, 65).join(' ') + '...';
-//             }
-//         }
-
-//         if (limitedText) {
-//             element.innerText = limitedText;
-//         }
-//     });
-// }
-
-// // Call the function initially
-// limitTextBasedOnScreenWidth();
-
-// // Add event listener for window resize
-// window.addEventListener('resize', limitTextBasedOnScreenWidth);
-
-
 // shorten text in text-sub
 function limitTextBasedOnScreenWidth() {
     var textSubElements = document.getElementsByClassName('text-sub');
@@ -237,9 +133,24 @@ function limitTextBasedOnScreenWidth() {
         var text = element.innerText;
         var words = text.split(' ');
         var limitedText = '';
-        if (words.length > 70) {
-            limitedText = words.slice(0, 70).join(' ') + '...';
-        } 
+        if (screenWidth > 1500) {
+            if (words.length > 70) {
+                limitedText = words.slice(0, 70).join(' ') + '...';
+            }
+        } else if (screenWidth <= 911) {
+            if (words.length > 25) {
+                limitedText = words.slice(0, 20).join(' ') + '...';
+            }
+        } else if (screenWidth <= 1100) {
+            if (words.length > 30) {
+                limitedText = words.slice(0, 30).join(' ') + '...';
+            }
+        } else if (screenWidth <= 1500) {
+            if (words.length > 65) {
+                limitedText = words.slice(0, 65).join(' ') + '...';
+            }
+        }
+
         if (limitedText) {
             element.innerText = limitedText;
         }
@@ -346,7 +257,7 @@ function handleViewButtonClick() {
         var coordinates = JSON.stringify(polygonCoordinates);
         polygonSearch.value = coordinates
     
-        const button = document.querySelector('.header__form-btn--submit');
+        const button = document.querySelector('.submit');
         button.click()
     }
 }
@@ -369,14 +280,6 @@ selectElement.addEventListener('change', function () {
     let polygonSearch = document.getElementById('polygonSearch')
     polygonSearch.value = ''
     
-    const button = document.querySelector('.header__form-btn--submit');
+    const button = document.querySelector('.submit');
     button.click()
-});
-
-
-////////// distance
-const distanceSlider = document.querySelector('.distance-slider');
-distanceSlider.addEventListener('input', function () {
-    let distanceText = document.querySelector('.distance-chosen')
-    distanceText.innerText = distanceSlider.value
 });

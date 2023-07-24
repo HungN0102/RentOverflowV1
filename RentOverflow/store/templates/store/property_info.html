@@ -18,6 +18,10 @@
         <!-- font-awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- leaflet -->	
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />	
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>	
+
         <title>RentOverflow &mdash; your home, your freedom</title>
     </head>
     <body>
@@ -128,8 +132,21 @@
                     Residents of Pan Peninsula also benefit from 24 hour concierge, cinema room, gym, health spa and 48th floor cocktail bar. Ideally located within easy reach of Canary Wharf Station (Jubilee Line) and South Quay DLR.
                 </div>
             </section>
-            <section class="more-properties">
-                <button class="btn btn--properties">More Properties</button>
+            <section class="map">		
+                <div class="" id="map"></div>	
+            </section>	
+            <section class="popup">	
+                <div class="popup-box">	
+                    <div class="popup-box--title">Copy this URL and share it!</div>	
+                    <div class="popup-box--url">	
+                        <span id="urlToCopy">https://www.rightmove.co.uk/properties/137781044#/?channel=RES_LET</span>	
+                    </div>	
+                    <div class="popup-box--buttons">	
+                        <button class="btn btn--copy">COPY URL</button>	
+                        <button class="cancel">NO THANKS</button>	
+                    </div>	
+                    <div class="popup-box--close"><i class="fa fa-times" aria-hidden="true"></i></div>	
+                </div>	
             </section>
         </div>
         {% include './footer.html' %}

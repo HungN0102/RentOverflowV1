@@ -1,5 +1,3 @@
-// sliding pictures
-
 const listings = document.querySelectorAll('.listing');
 
 const goNext = (button) => {
@@ -52,55 +50,5 @@ hamburger = document.querySelector(".navbar-hamburger");
 hamburger.onclick = function() {
     var navmain = document.querySelector('.navbar-main');
     navmain.classList.toggle('active');
+
 }
-
-// map
-var map = L.map('map').setView([51.505, -0.09], 17);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-// popup open
-share = document.querySelector(".btn--share");
-share.onclick = function() {
-    var popup = document.querySelector('.popup');
-    popup.classList.toggle('active');
-}
-
-// popup close
-function closePopup(event) {
-    var popup = document.querySelector('.popup');
-    popup.classList.toggle('active');
-}
-
-cancelButton = document.querySelector(".cancel");
-cancelButton.addEventListener('click', closePopup)
-
-xButton = document.querySelector(".popup-box--close");
-xButton.addEventListener('click', closePopup)
-
-// popup link url
-function copyURL(event) {
-    // Get the URL text from the span
-    const urlSpan = document.getElementById('urlToCopy');
-    const urlText = urlSpan.innerText;
-    
-    // Create a temporary input element to copy the text
-    const tempInput = document.createElement('input');
-    tempInput.setAttribute('value', urlText);
-    document.body.appendChild(tempInput);
-    
-    // Select and copy the text
-    tempInput.select();
-    document.execCommand('copy');
-    
-    // Remove the temporary input element
-    document.body.removeChild(tempInput);
-
-    var popup = document.querySelector('.popup');
-    popup.classList.toggle('active');
-}
-
-copyButton = document.querySelector(".btn--copy");
-copyButton.addEventListener('click', copyURL)
