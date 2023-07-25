@@ -381,3 +381,16 @@ distanceSlider.addEventListener('input', function () {
     let distanceText = document.querySelector('.distance-chosen')
     distanceText.innerText = distanceSlider.value
 });
+
+
+////////// Pressing Enter while focusing on input
+const locationSearchInput = document.getElementById('location-search');
+locationSearchInput.addEventListener('keypress', function (event) {
+    if (event.key === "Enter") {
+        const submitButton = document.querySelector('.header__form-btn--submit');
+        submitButton.click();
+    }
+});
+
+
+////////// 

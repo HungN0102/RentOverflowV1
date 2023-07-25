@@ -68,7 +68,7 @@
             <section class="sidebar">
                 <h3>{{property.title}}</h3>
                 <span class="price">
-                    £1850 pcm 
+                    £{{property.price}} pcm 
                 </span>
                 <div class="information">
                     <div class="information-group">
@@ -153,6 +153,27 @@
             document.getElementById("btn--contact").onclick = function () {
                 location.href = '{{property.propertyUrl}}';
             };
+        </script>
+        <script type="text/javascript">
+            var properties = JSON.parse('{{ propertyGS|escapejs }}');
+            
+            var map = L.map('map').setView([properties.features[0].geometry.coordinates[1], properties.features[0].geometry.coordinates[0]], 12);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            
+            properties.features.forEach(function(feature) {
+                var coordinates = feature.geometry.coordinates;
+                var pk = feature.properties.pk;
+                var marker = L.marker([coordinates[1], coordinates[0]], pk).addTo(map);
+                marker.propertyId = pk;
+                // Add a click event listener to the marker
+                marker.on('click', function () {
+                    // Redirect to the property detail page
+                    window.location.href = '/property/' + this.propertyId + '/';
+                });
+            });
         </script>
     </body>
 </html>

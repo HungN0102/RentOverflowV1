@@ -53,9 +53,11 @@ INSTALLED_APPS = [
     
     # local apps
     'store',
+    'account'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

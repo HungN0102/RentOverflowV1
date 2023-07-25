@@ -209,7 +209,11 @@
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </div>
                                 <select id="added-date" class="added-date form-control" name="added-date">
-                                    <option selected>Choose...</option>
+                                    {% if added_date != 'None' %} 	
+                                        <option selected>{{added_date}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="Last 24h">Last 24h</option>
                                     <option value="Last 3 days">Last 3 days</option>
                                     <option value="Last 7 days">Last 7 days</option>
@@ -223,7 +227,11 @@
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </div>
                                 <select id="property-type" class="property-type form-control" name="property-type">
-                                    <option selected>Choose...</option>
+                                    {% if property_type != 'None' %} 	
+                                        <option selected>{{property_type}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="House Share">House Share</option>
                                     <option value="Flat">Apartment</option>
                                     <option value="Flat">Flat</option>
@@ -238,7 +246,11 @@
                                     
                                 </div>
                                 <select id="pet-friendly" class="pet-friendly form-control" name="pet-friendly">
-                                    <option selected>Choose...</option>
+                                    {% if pet_friendly != 'None' %} 	
+                                        <option selected>{{pet_friendly}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="Pet Allowed">Pet Allowed</option>
                                     <option value="Ask Agents">Ask Agents</option>
                                 </select>
@@ -250,7 +262,11 @@
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </div>
                                 <select id="parking" class="parking form-control" name="parking">
-                                    <option selected>Choose...</option>
+                                    {% if parking != 'None' %} 	
+                                        <option selected>{{parking}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="Available Parking">Available Parking</option>
                                 </select>
                             </div>
@@ -262,7 +278,11 @@
                                     
                                 </div>
                                 <select id="garden" class="garden form-control" name="garden">
-                                    <option selected>Choose...</option>
+                                    {% if parking != 'None' %} 	
+                                        <option selected>{{garden}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="Available Garden">Available Garden</option>
                                 </select>
                             </div>
@@ -274,13 +294,18 @@
                                     
                                 </div>
                                 <select id="furnish-type" class="furnish-type form-control" name="furnish-type">
-                                    <option selected>Choose...</option>
+                                    {% if furnish_type != 'None' %} 	
+                                        <option selected>{{furnish_type}}</option>	
+                                    {% else %} 	
+                                        <option selected>Choose...</option>	
+                                    {% endif %}
                                     <option value="Unfurnished">Unfurnished</option>
                                     <option value="Furnished">Furnished</option>
                                 </select>
                             </div>
                             <div class="extra-group extra-group--max-distance">
-                                <input name="distance-slider" type="range" min="0" max="40" value="20" class="distance-slider" id="myRange">
+                                <input name="distance-slider" type="range" min="0" max="40" value='{{distance_slider}}' class="distance-slider" id="myRange">
+
                                 <div class="distance-block distance-start">0</div>
                                 <div class="distance-block distance-text">Distance in km</div>
                                 <div class="distance-block distance-chosen">20</div>
@@ -300,7 +325,11 @@
                 <div class="overview-right">
                     <label for="sort">Sort by:</label>
                     <select name="" id="sort">
-                        <option selected>Featured</option>
+                        {% if sortSelect != 'None' %}
+                            <option selected>{{sortSelect}}</option>
+                        {% else %}
+                            <option selected>Default</option>
+                        {% endif %}
                         <option value="Price: Low to high">Price: Low to high</option>
                         <option value="Price: High to low">Price: High to low</option>
                         <option value="Bedroom: Low to high">Bedroom: Low to high</option>
@@ -373,9 +402,9 @@
                             <a href="{{property.get_absolute_url}}" class="btn btn--contact">	
                                     View Details	
                             </a>	
-                            <!-- <button class="btn btn--heart">	
+                            <button class="btn btn--heart">	
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>	
-                            </button>	 -->
+                            </button>	
                         </div>	
                     </div>	
                 </div>	
@@ -384,7 +413,7 @@
             </section>
             <section class="navigation">
                 {% if properties_page.has_previous %}	
-                    <a href="?page={{ properties_page.previous_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box">	
+                    <a href="?page={{ properties_page.prev_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}&added-date={{ added_date }}&property-type={{ property_type }}&pet-friendly={{ pet_friendly }}&parking={{ parking }}&garden={{ garden }}&furnish-type={{ furnish_type }}&distance-slider={{distance_slider}}" class="navigation-box">	
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>	
                         Back	
                     </a>	
@@ -400,7 +429,7 @@
                 </span>	
             
                 {% if properties_page.has_next %}	
-                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}" class="navigation-box navigation-link navigation-next">Next	
+                    <a href="?page={{ properties_page.next_page_number }}{% if search %}&location-search={{ search }}{% endif %}&min-bed={{ min_bed }}&max-bed={{ max_bed }}&min-price={{ min_price }}&max-price={{ max_price }}&sortSelect={{ sortSelect }}&polygonSearch={{ polygonSearch }}&added-date={{ added_date }}&property-type={{ property_type }}&pet-friendly={{ pet_friendly }}&parking={{ parking }}&garden={{ garden }}&furnish-type={{ furnish_type }}&distance-slider={{distance_slider}}" class="navigation-box navigation-link navigation-next">Next	
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>	
                     </a>	
                 {% else %}	
@@ -409,19 +438,21 @@
                     </a>	
                 {% endif %}
             </section>
-            <section class="map">	
-                <div class="map-sticky">	
-                    <div class="" id='map'>	
-                        <div class="map-edit">	
-                            <span>Draw your search area with dots and find properties within</span>	
+            <section class="sidebar">
+                <div class="map">	
+                    <div class="map-sticky">	
+                        <div class="" id='map'>	
+                            <div class="map-edit">	
+                                <span>Draw your search area with dots and find properties within</span>	
+                            </div>	
+                        </div>	
+                        <div class="map-buttons">	
+                            <button class="map-undo">Remove Last Point</button>	
+                            <button class="map-clear">Clear Area</button>	
+                            <button class="map-submit">View Properties</button>	
                         </div>	
                     </div>	
-                    <div class="map-buttons">	
-                        <button class="map-undo">Remove Last Point</button>	
-                        <button class="map-clear">Clear Area</button>	
-                        <button class="map-submit">View Properties</button>	
-                    </div>	
-                </div>	
+                </div>
             </section>
         </div>
 

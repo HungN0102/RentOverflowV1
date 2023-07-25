@@ -73,13 +73,16 @@ def property_list(request):
     max_price = str(request.GET.get("max-price"))
     max_price_number = get_number(max_price)
 
-    added_date = convert_days(str(request.GET.get("added-date")))
+    added_date = str(request.GET.get("added-date"))
+    added_date_number = convert_days(added_date)
+
     property_type = str(request.GET.get("property-type"))
     pet_friendly = str(request.GET.get("pet-friendly"))
     parking = str(request.GET.get("parking"))
     garden = str(request.GET.get("garden"))
     furnish_type = str(request.GET.get("furnish-type"))
-    distance_slider = get_number(str(request.GET.get("distance-slider")))
+    distance_slider = str(request.GET.get("distance-slider"))
+    distance_slider_number = get_number(str(request.GET.get("distance-slider")))
 
     sortSelect = str(request.GET.get("sortSelect"))
     
@@ -122,9 +125,9 @@ def property_list(request):
 
     # EXTRA FILTERS
     # added-date
-    if added_date is not None:
+    if added_date_number is not None:
         now = timezone.now()
-        filter_day = now - timedelta(days=added_date)
+        filter_day = now - timedelta(days=added_date_number)
         properties = properties.filter(created_at__gte=filter_day)
 
     # propertyType
@@ -148,8 +151,8 @@ def property_list(request):
         properties = properties.filter(furnishedType__contains=furnish_type)
 
     # distance-slider
-    if distance_slider is not None and search_location != '' and search_location is not None:
-        properties = properties.filter(distance__lt=D(km=distance_slider)).order_by('distance')
+    if distance_slider_number is not None and search_location != '' and search_location is not None:
+        properties = properties.filter(distance__lt=D(km=distance_slider_number)).order_by('distance')
 
 
     p = Paginator(properties, 20)
@@ -164,13 +167,22 @@ def property_list(request):
                                                         'max_price':max_price,
                                                         'sortSelect':sortSelect,
                                                         'properties_page': properties_page,
-                                                        'polygonSearch':polygonSearch
+                                                        'polygonSearch':polygonSearch,
+                                                        'added_date': added_date,
+                                                        'property_type': property_type,
+                                                        'pet_friendly':pet_friendly,
+                                                        'parking':parking,
+                                                        'garden':garden,
+                                                        'furnish_type':furnish_type,
+                                                        'distance_slider':distance_slider
                                                         })
 
 def property_info(request, pk):
     property = get_object_or_404(Property, pk=pk)
+    propertyGS = serialize('geojson', [property])
     context = {
-        'property': property 
+        'property': property,
+        'propertyGS':propertyGS
     }
     
     return render(request, 'store/property_info.html', context)
