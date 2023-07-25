@@ -1,0 +1,11 @@
+{% autoescape off %}
+Hi,
+
+Thank you for registering on our website.
+
+Please be kind by clicking this link below:
+http://{{domain}}{% url 'email_verification' uidb64=uid token=token %}
+
+Regards,
+Hung Nguyen
+{% endautoescape %}

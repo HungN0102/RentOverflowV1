@@ -37,28 +37,15 @@
     <body>
         {% include 'store/navbar.html' %}
         <br>
+        <br>
+        <br>
         <div class="container bg-white shadow-md p-5 form-layout">
-            <h3 class="container-title--h3">Create your account</h3>
-            <h5 class="container-title--h5">Get your rent today!</h5>
-            
-            <br>
-
-            <form action="" method='POST' autocomplete='off'>
-                {% csrf_token %}
-                {{form.email|as_crispy_field}}
-                {{form.username|as_crispy_field}}
-                {{form.password1|as_crispy_field}}
-                {{form.password2|as_crispy_field}}
-                <br>
-                <button type='submit' class='btn btn-primary navbar-btn text-white w-100'>
-                    <i class="fa fa-key" aria-hidden="true"></i>
-                    &nbsp; Create
-                </button>
-                <br> 
-                <div class="text-center">
-                    <a href="{% url 'login' %}">Already have an account?</a>
-                </div>
-            </form>
+            <div class="text-center">
+                <i class="fa fa-envelope fa-3x" aria-hidden="true"></i>
+                <h5><strong>An Verification Email Has Been Sent</strong></h5>
+                <hr>
+                <p>Please have a look!</p>
+            </div>
         </div>
         <br>
         <br>
