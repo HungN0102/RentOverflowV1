@@ -132,6 +132,7 @@ resetFilter.addEventListener('click', (e) => {
     const selects = document.querySelectorAll('.form-control');
     selects.forEach(select => {
         select.selectedIndex = 0
+        select.options[0].innerText = 'Choose...'
         // Trigger the input event to update the labels
         select.dispatchEvent(new Event('input'));
     })

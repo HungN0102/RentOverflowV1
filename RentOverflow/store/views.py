@@ -1,4 +1,5 @@
 from django.contrib.gis.geos import Point, Polygon
+from django.contrib.gis.measure import D
 from django.contrib.gis.db.models.functions import Distance
 
 from django.urls import reverse
@@ -16,6 +17,9 @@ from django.http import JsonResponse
 
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
+
+from django.utils import timezone
+from datetime import timedelta
 
 def home(request):
     properties = Property.objects.all()
@@ -36,6 +40,7 @@ def home(request):
 
 
 def property_list(request):
+    # search location
     search = request.GET.get('search')
     if search is None or search == '':
         properties = Property.objects.all()
@@ -45,7 +50,8 @@ def property_list(request):
     search_location = request.GET.get("location-search")
     if search_location is None:
         search_location = search
-
+    
+    # Filter by Polygon
     polygonSearch = request.GET.get('polygonSearch')
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
         print("*"*20)
@@ -54,6 +60,7 @@ def property_list(request):
         polygonSearchArea = convert_list_to_polygon(polygonSearchArea)
         properties = properties.filter(point_geom__within=polygonSearchArea)
 
+    # Get selected value
     min_bed = str(request.GET.get("min-bed"))
     min_bed_number = get_number(min_bed)
 
@@ -66,11 +73,21 @@ def property_list(request):
     max_price = str(request.GET.get("max-price"))
     max_price_number = get_number(max_price)
 
+    added_date = convert_days(str(request.GET.get("added-date")))
+    property_type = str(request.GET.get("property-type"))
+    pet_friendly = str(request.GET.get("pet-friendly"))
+    parking = str(request.GET.get("parking"))
+    garden = str(request.GET.get("garden"))
+    furnish_type = str(request.GET.get("furnish-type"))
+    distance_slider = get_number(str(request.GET.get("distance-slider")))
+
     sortSelect = str(request.GET.get("sortSelect"))
     
+    # CLOSEST TO DISTANCE
     if search_location != '' and search_location is not None:
         properties = get_closest_properties(search_location)
 
+    # MAIN 4 FILTERS
     if min_bed_number != 'Choose...' and min_bed_number is not None:
         properties = properties.filter(bedrooms__gte=min_bed_number)
 
@@ -83,6 +100,7 @@ def property_list(request):
     if max_price_number != 'Choose...' and max_price_number is not None:
         properties = properties.filter(price__lte=max_price_number)
 
+    # SORT SELECT
     if sortSelect == 'Featured':
         properties = properties.order_by('created_at')
 
@@ -98,8 +116,41 @@ def property_list(request):
     if sortSelect == 'Bedroom: High to low':
         properties = properties.order_by('-bedrooms')
 
+    # POLYGON
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
         properties = properties.filter(point_geom__within=polygonSearchArea)
+
+    # EXTRA FILTERS
+    # added-date
+    if added_date is not None:
+        now = timezone.now()
+        filter_day = now - timedelta(days=added_date)
+        properties = properties.filter(created_at__gte=filter_day)
+
+    # propertyType
+    if property_type != 'Choose...' and property_type != 'None':
+        properties = properties.filter(propertyType__contains=property_type)
+
+    # petFriendly
+    if pet_friendly != 'Choose...' and pet_friendly != 'None':
+        properties = properties.filter(petFriendly__contains=pet_friendly)
+
+    # parking
+    if parking != 'Choose...' and parking != 'None':
+        properties = properties.filter(parking__contains=parking)
+
+    # gardens
+    if garden != 'Choose...' and garden != 'None':
+        properties = properties.filter(gardens__contains=garden)
+
+    # furnish_type
+    if furnish_type != 'Choose...' and furnish_type != 'None':
+        properties = properties.filter(furnishedType__contains=furnish_type)
+
+    # distance-slider
+    if distance_slider is not None and search_location != '' and search_location is not None:
+        properties = properties.filter(distance__lt=D(km=distance_slider)).order_by('distance')
+
 
     p = Paginator(properties, 20)
     page = request.GET.get('page')
@@ -126,6 +177,7 @@ def property_info(request, pk):
 
 
 def get_number(string):
+    string = str(string)
     match = re.search(r'\d+', string)
     if match:
         number = int(match.group())
@@ -158,3 +210,15 @@ def convert_list_to_polygon(coordinates):
     # Creating the Polygon object
     polygon = Polygon(coordinates)
     return polygon
+
+def convert_days(string):
+    if string == 'Choose...':
+        return None 
+    if string == 'Last 24h':
+        return 1
+    if string == 'Last 3 days':
+        return 3
+    if string == 'Last 7 days':
+        return 7
+    if string == 'Last 14 days':
+        return 14
