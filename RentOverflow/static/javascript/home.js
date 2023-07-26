@@ -1,9 +1,3 @@
-/////////////////// hamburger 
-hamburger = document.querySelector(".navbar-hamburger");
-hamburger.onclick = function() {
-    var navmain = document.querySelector('.navbar-main');
-    navmain.classList.toggle('active');
-}
 
 /////////////////// map
 let dotMapColor = '#2e8a96'

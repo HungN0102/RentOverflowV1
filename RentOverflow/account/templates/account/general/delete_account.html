@@ -29,7 +29,7 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-        <link rel="stylesheet" href="{% static 'css/account-style.css' %}"> 
+        <link rel="stylesheet" href="{% static 'css/account-style.css' %}">
 
         
         <title>RentOverflow &mdash; your home, your freedom</title>
@@ -37,28 +37,24 @@
     <body>
         {% include 'store/navbar.html' %}
         <div class="container bg-white shadow-md p-5 form-layout">
-            <h3 class="container-title--h3">Login to your account</h3>
-            
             <br>
-
+            <br>
+            <h3 class='text-center'>Delete your account</h3>
+            <br>
             <form action="" method='POST' autocomplete='off'>
                 {% csrf_token %}
-                {{form.username|as_crispy_field}}
-                {{form.password|as_crispy_field}}
-                <br>
-                <br>
-                <button type='submit' class='btn btn-primary navbar-btn text-white w-100'>
-                    <i class="fa fa-key" aria-hidden="true"></i>
-                    &nbsp; Login
-                </button>
-                <br> <br>
-                {{form.non_field_errors}}
                 <div class="text-center">
-                    <a href="{% url 'register' %}">Don't have an account?</a>
+                    <button type='submit' class='btn-delete-account bg-danger'>
+                        &nbsp; Delete
+                    </button>
+                    &nbsp; 
+                    <a class='btn-delete-account bg-primary btn-cancel' href="{% url 'dashboard' %}">
+                        &nbsp; Cancel
+                    </a>
                 </div>
             </form>
         </div>
-        <br>
+        {% include 'store/footer.html' %}
         <script src="{% static 'javascript/navbar.js' %}"></script>
     </body>
 </html>

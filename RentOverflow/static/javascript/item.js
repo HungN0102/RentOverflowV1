@@ -47,13 +47,6 @@ listings.forEach((listing) => {
     count.textContent = '1/' + slides.length
 });
 
-// hamburger 
-hamburger = document.querySelector(".navbar-hamburger");
-hamburger.onclick = function() {
-    var navmain = document.querySelector('.navbar-main');
-    navmain.classList.toggle('active');
-}
-
 // popup open
 share = document.querySelector(".btn--share");
 share.onclick = function() {

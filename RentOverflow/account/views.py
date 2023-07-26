@@ -78,20 +78,6 @@ def my_login(request):
     
     return render(request, 'account/general/my_login.html',context=context_dict)
 
-@login_required(login_url='login')
-def user_logout(request):
-    logout(request)
-    return redirect("home")
-    # try:
-    #     for key in list(request.session.keys()):
-    #         if key == 'session_key':
-    #             continue
-    #         else:
-    #             del request.session[key]
-    # except Exception as e :
-    #     print(e)
-    # return redirect('store')
-
 def email_verification(request, uidb64, token):
     uid = force_str(urlsafe_base64_decode(uidb64))
     user = User.objects.get(pk=uid)
@@ -114,3 +100,28 @@ def email_verification_success(request):
 
 def email_verification_failed(request):
     return render(request, 'account/registration/email_verification_failed.html', context={})
+
+@login_required(login_url='login')
+def user_logout(request):
+    logout(request)
+    return redirect("home")
+
+
+@login_required(login_url='my_login')
+def delete_account(request):
+    user = User.objects.get(id=request.user.id)
+    
+    if request.method == 'POST':
+        user.delete()
+        
+        return redirect('home')
+    
+    return render(request, 'account/general/delete_account.html',context={
+        
+    })
+
+@login_required(login_url='my_login')
+def dashboard(request):
+    return render(request, 'account/general/dashboard.html', {
+        'username': request.user.username
+    })

@@ -209,11 +209,12 @@
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </div>
                                 <select id="added-date" class="added-date form-control" name="added-date">
-                                    {% if added_date != 'None' %} 	
-                                        <option selected>{{added_date}}</option>	
+                                    <!-- {% if added_date != 'None' %} 	
+                                        <option>{{added_date}}</option>	
                                     {% else %} 	
-                                        <option selected>Choose...</option>	
-                                    {% endif %}
+                                        <option>Choose...</option>	
+                                    {% endif %} -->
+                                    <option>Choose...</option>	
                                     <option value="Last 24h">Last 24h</option>
                                     <option value="Last 3 days">Last 3 days</option>
                                     <option value="Last 7 days">Last 7 days</option>
@@ -459,5 +460,6 @@
         		
         {% include './footer.html' %}	
         <script src="{% static 'javascript/product-list.js' %}"></script>
+        <script src="{% static 'javascript/navbar.js' %}"></script>
     </body>
 </html>

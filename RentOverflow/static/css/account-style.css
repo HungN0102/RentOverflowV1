@@ -179,7 +179,7 @@ body {
 .container {
     font-size: 170%;
     font-family: 'Poppins';
-    min-height: 38vh;
+    min-height: 42vh;
 }
 
 .container-title--h3 {
@@ -199,4 +199,14 @@ body {
 .emailinput {
     padding: 1rem 2rem;
     font-size: 1.6rem;
+}
+
+.btn-delete-account {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: white;
+    font-size: 2rem;
+    width: 13rem;
 }
