@@ -18,6 +18,9 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+# for logout
+from django.contrib.auth import logout
+
 # Create your views here.
 def register(request):
     form = CreateUserForm()
@@ -74,6 +77,20 @@ def my_login(request):
     }
     
     return render(request, 'account/general/my_login.html',context=context_dict)
+
+@login_required(login_url='login')
+def user_logout(request):
+    logout(request)
+    return redirect("home")
+    # try:
+    #     for key in list(request.session.keys()):
+    #         if key == 'session_key':
+    #             continue
+    #         else:
+    #             del request.session[key]
+    # except Exception as e :
+    #     print(e)
+    # return redirect('store')
 
 def email_verification(request, uidb64, token):
     uid = force_str(urlsafe_base64_decode(uidb64))

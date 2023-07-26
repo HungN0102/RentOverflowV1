@@ -179,6 +179,7 @@ body {
 .container {
     font-size: 170%;
     font-family: 'Poppins';
+    min-height: 38vh;
 }
 
 .container-title--h3 {
