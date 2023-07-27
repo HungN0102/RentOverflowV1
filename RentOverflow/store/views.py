@@ -115,20 +115,17 @@ def property_list(request):
         properties = properties.filter(price__lte=max_price_number)
 
     # SORT SELECT
-    if sortSelect == 'Featured':
-        properties = properties.order_by('created_at')
 
     if sortSelect == 'Price: Low to high':
         properties = properties.order_by('price')
-
-    if sortSelect == 'Price: High to low':
+    elif sortSelect == 'Price: High to low':
         properties = properties.order_by('-price')
-
-    if sortSelect == 'Bedroom: Low to high':
+    elif sortSelect == 'Bedroom: Low to high':
         properties = properties.order_by('bedrooms')
-
-    if sortSelect == 'Bedroom: High to low':
+    elif sortSelect == 'Bedroom: High to low':
         properties = properties.order_by('-bedrooms')
+    else:
+        properties = properties.order_by('created_at')
 
     # POLYGON
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
@@ -207,8 +204,11 @@ def favorite_listing(request):
     userfavorites, _ = UserFavorites.objects.get_or_create(user=user)
     favorite_properties = userfavorites.favorite.all()
 
+    propertiesGS = serialize('geojson', favorite_properties)
+
     context = {
         'properties': favorite_properties,
+        'propertiesGS':propertiesGS
     }
     return render(request, 'store/favorite_listing.html', context)
 

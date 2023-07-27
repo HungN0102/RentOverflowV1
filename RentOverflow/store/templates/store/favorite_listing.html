@@ -124,12 +124,31 @@
                 {% endfor %}
                 <!-- End Listing -->
             </section>
+            <section class="sidebar">
+                <br>
+                <br>
+                <div class="map">	
+                    <div class="map-sticky">	
+                        <div class="" id='map'>	
+                            <!-- <div class="map-edit">	
+                                <span>Draw your search area with dots and find properties within</span>	
+                            </div>	 -->
+                        </div>	
+                        <!-- <div class="map-buttons">	
+                            <button class="map-undo">Remove Last Point</button>	
+                            <button class="map-clear">Clear Area</button>	
+                            <button class="map-submit">View Properties</button>	
+                        </div>	 -->
+                    </div>	
+                </div>
+            </section>
         </div>
 
         		
         {% include './footer.html' %}	
         <script src="{% static 'javascript/product-list.js' %}"></script>
         <script src="{% static 'javascript/navbar.js' %}"></script>
+        <script src="{% static 'javascript/favorites.js' %}"></script>
         <script>
             $(document).on('click', '.btn--heart', function(e) {
                 e.preventDefault();
@@ -155,15 +174,17 @@
             });
         </script>
         <script>
-            // Get all the elements with the class 'btn--heart'
-            const heartButtons = document.querySelectorAll('.btn--heart');
-            heartButtons.forEach(button => {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
+            var properties = JSON.parse('{{ propertiesGS|escapejs }}');
 
-                    const heartIcon = this.querySelector('.fa-heart'); // Find the .fa-heart icon within the clicked button
-                    heartIcon.classList.toggle('fa-heart-o');
-                    heartIcon.classList.toggle('color-red');
+            properties.features.forEach(function(feature) {
+                var coordinates = feature.geometry.coordinates;
+                var pk = feature.properties.pk;
+                var marker = L.marker([coordinates[1], coordinates[0]], pk).addTo(map);
+                marker.propertyId = pk;
+                // Add a click event listener to the marker
+                marker.on('click', function () {
+                    // Redirect to the property detail page
+                    window.location.href = '/property/' + this.propertyId + '/';
                 });
             });
         </script>
