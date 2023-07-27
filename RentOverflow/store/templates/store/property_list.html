@@ -473,7 +473,7 @@
                 
                 $.ajax({
                     type: 'POST',
-                    url:"{% url 'cart_update' %}",
+                    url:"{% url 'update_favorite' %}",
                     data: {
                         property_id: property_id,
                         csrfmiddlewaretoken: '{{ csrf_token }}',

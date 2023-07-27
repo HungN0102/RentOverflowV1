@@ -1,8 +1,12 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponse, HttpResponseRedirect
 from .forms import CreateUserForm, LoginForm
+
+from django.http import JsonResponse
 
 # import models
 from django.contrib.auth.models import User
+from .models import UserFavorites
+from store.models import Property
 
 # for registration
 from django.contrib.sites.shortcuts import get_current_site
@@ -18,8 +22,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-# for logout
-from django.contrib.auth import logout
+
 
 # Create your views here.
 def register(request):
@@ -76,7 +79,7 @@ def my_login(request):
         'form': form 
     }
     
-    return render(request, 'account/general/my_login.html',context=context_dict)
+    return render(request, 'account/general/login.html',context=context_dict)
 
 def email_verification(request, uidb64, token):
     uid = force_str(urlsafe_base64_decode(uidb64))
@@ -101,7 +104,7 @@ def email_verification_success(request):
 def email_verification_failed(request):
     return render(request, 'account/registration/email_verification_failed.html', context={})
 
-@login_required(login_url='my_login')
+@login_required(login_url='login')
 def user_logout(request):
     try:
         for key in list(request.session.keys()):
@@ -114,7 +117,7 @@ def user_logout(request):
     return redirect("home")
 
 
-@login_required(login_url='my_login')
+@login_required(login_url='login')
 def delete_account(request):
     user = User.objects.get(id=request.user.id)
     
@@ -127,8 +130,23 @@ def delete_account(request):
         
     })
 
-@login_required(login_url='my_login')
+@login_required(login_url='login')
 def dashboard(request):
     return render(request, 'account/general/dashboard.html', {
         'username': request.user.username
     })
+
+@login_required(login_url='login')
+def update_favorite(request):
+    user = User.objects.get(id=request.user.id)
+
+    if request.POST.get('action') == 'post':
+        property_id = int(request.POST.get('property_id'))
+        property_obj = get_object_or_404(Property, pk=property_id)
+
+        userfavorites, _ = UserFavorites.objects.get_or_create(user=user)
+        userfavorites.favorite.add(property_obj)
+        return JsonResponse({'status': 'success'})
+
+    # Handle other cases if needed (e.g., GET request)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})

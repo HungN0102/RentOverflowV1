@@ -9,7 +9,6 @@ from django.core.paginator import Paginator
 from django.core.serializers import serialize
 
 from .forms import searchForm
-from .models import Property
 
 import re
 import json
@@ -20,6 +19,12 @@ from geopy.distance import geodesic
 
 from django.utils import timezone
 from datetime import timedelta
+
+# import models
+from django.contrib.auth.models import User
+from account.models import UserFavorites
+from .models import Property
+
 
 def home(request):
     properties = Property.objects.all()
@@ -54,8 +59,6 @@ def property_list(request):
     # Filter by Polygon
     polygonSearch = request.GET.get('polygonSearch')
     if polygonSearch is not None and polygonSearch != '' and polygonSearch != 'None':
-        print("*"*20)
-        print(polygonSearch)
         polygonSearchArea = eval(polygonSearch)
         polygonSearchArea = convert_list_to_polygon(polygonSearchArea)
         properties = properties.filter(point_geom__within=polygonSearchArea)
@@ -188,6 +191,18 @@ def property_info(request, pk):
     return render(request, 'store/property_info.html', context)
 
 
+def favorite_listing(request):
+    user = User.objects.get(id=request.user.id)
+    userfavorites, _ = UserFavorites.objects.get_or_create(user=user)
+    favorite_properties = userfavorites.favorite.all()
+
+    context = {
+        'properties': favorite_properties,
+    }
+    return render(request, 'store/favorite_listing.html', context)
+
+
+# supporting definitions
 def get_number(string):
     string = str(string)
     match = re.search(r'\d+', string)
