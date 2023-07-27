@@ -4,11 +4,8 @@ from store.models import Property
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 # Create your views here.
-
 def cart_summary(request):
-
     cart = Cart(request)
-
     return render(request, 'cart/cart_summary.html', {'cart':cart})
 
 def cart_update(request):

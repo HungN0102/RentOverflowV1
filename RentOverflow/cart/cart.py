@@ -17,5 +17,14 @@ class Cart():
         if property_id in self.cart:
             del self.cart[property_id]
         else:
-            self.cart[property_id] = 1
+            self.cart[property_id] = property_id
         self.session.modified = True
+
+    def __iter__(self):
+        all_property_ids = list(self.cart.keys())
+        properties = Property.objects.filter(pk__in = all_property_ids)
+        print(all_property_ids)
+        print("*"*20)
+        for property in properties:
+            yield property
+            

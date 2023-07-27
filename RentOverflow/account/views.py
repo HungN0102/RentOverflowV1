@@ -101,9 +101,16 @@ def email_verification_success(request):
 def email_verification_failed(request):
     return render(request, 'account/registration/email_verification_failed.html', context={})
 
-@login_required(login_url='login')
+@login_required(login_url='my_login')
 def user_logout(request):
-    logout(request)
+    try:
+        for key in list(request.session.keys()):
+            if key == 'session_key':
+                continue
+            else:
+                del request.session[key]
+    except Exception as e :
+        print(e)
     return redirect("home")
 
 
