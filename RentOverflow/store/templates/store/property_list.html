@@ -406,9 +406,20 @@
                             <a href="{{property.get_absolute_url}}" class="btn btn--contact">	
                                     View Details	
                             </a>	
-                            <button class="btn btn--heart" value="{{property.id}}">	
+                            <!-- <button class="btn btn--heart" value="{{property.id}}">	
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>	
-                            </button>	
+                            </button>	 -->
+                            {% if user.is_authenticated and property.id in userfavorites %}
+                                <!-- Property is in user's favorites, show the filled heart icon -->
+                                <button class="btn btn--heart" value="{{ property.id }}">	
+                                    <i class="fa fa-heart color-red" aria-hidden="true"></i>
+                                </button>	
+                            {% else %}
+                                <!-- Property is not in user's favorites, show the outline heart icon -->
+                                <button class="btn btn--heart" value="{{ property.id }}">	
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                </button>
+                            {% endif %}
                         </div>	
                     </div>	
                 </div>	
@@ -485,6 +496,19 @@
                     error: function(xhr, errmsg, err) {
                         console.log('Error occurred:', err)
                     }
+                });
+            });
+        </script>
+        <script>
+            const heartButtons = document.querySelectorAll('.btn--heart');
+            heartButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const heartIcon = this.querySelector('.fa'); // Find the .fa-heart icon within the clicked button
+                    heartIcon.classList.toggle('fa-heart-o');
+                    heartIcon.classList.toggle('fa-heart');
+                    heartIcon.classList.toggle('color-red');
                 });
             });
         </script>

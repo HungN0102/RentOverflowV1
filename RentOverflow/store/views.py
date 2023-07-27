@@ -45,6 +45,14 @@ def home(request):
 
 
 def property_list(request):
+    # user
+    userfavorites = None
+    user = None
+    if request.user.is_authenticated:
+       user = User.objects.get(id=request.user.id)
+       userfavorites = get_object_or_404(UserFavorites, user=user)
+       userfavorites = list(userfavorites.favorite.values_list('id', flat=True))
+
     # search location
     search = request.GET.get('search')
     if search is None or search == '':
@@ -162,6 +170,7 @@ def property_list(request):
     page = request.GET.get('page')
     properties_page = p.get_page(page) 
 
+
     return render(request, 'store/property_list.html', {'properties': properties,
                                                         'search':search_location,
                                                         'min_bed':min_bed,
@@ -177,7 +186,9 @@ def property_list(request):
                                                         'parking':parking,
                                                         'garden':garden,
                                                         'furnish_type':furnish_type,
-                                                        'distance_slider':distance_slider
+                                                        'distance_slider':distance_slider,
+                                                        'user':user,
+                                                        'userfavorites':userfavorites
                                                         })
 
 def property_info(request, pk):

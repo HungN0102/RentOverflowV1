@@ -145,7 +145,12 @@ def update_favorite(request):
         property_obj = get_object_or_404(Property, pk=property_id)
 
         userfavorites, _ = UserFavorites.objects.get_or_create(user=user)
-        userfavorites.favorite.add(property_obj)
+
+        if userfavorites.favorite.filter(pk=property_id).exists():
+            userfavorites.favorite.remove(property_obj)
+        else:
+            userfavorites.favorite.add(property_obj)
+
         return JsonResponse({'status': 'success'})
 
     # Handle other cases if needed (e.g., GET request)

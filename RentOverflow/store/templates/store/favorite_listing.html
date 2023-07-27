@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,400i|Nunito:300,300i" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/product-list-style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/favorite-listing-style.css' %}">
 
         <!-- bootstrap -->
         
@@ -32,6 +32,26 @@
         {% include './navbar.html' %}
 
         <div class="body-container">
+            <section class="overview">
+                <div class="overview-left">
+                    <h3>Your favorite rent</h3>
+                    <span>{{ properties|length }} results</span>
+                </div>
+                <!-- <div class="overview-right">
+                    <label for="sort">Sort by:</label>
+                    <select name="" id="sort">
+                        {% if sortSelect != 'None' %}
+                            <option selected>{{sortSelect}}</option>
+                        {% else %}
+                            <option selected>Default</option>
+                        {% endif %}
+                        <option value="Price: Low to high">Price: Low to high</option>
+                        <option value="Price: High to low">Price: High to low</option>
+                        <option value="Bedroom: Low to high">Bedroom: Low to high</option>
+                        <option value="Bedroom: High to low">Bedroom: High to low</option>
+                    </select>
+                </div> -->
+            </section>
             <section class="product-list">
                 <!-- Listing -->
                 {% for property in properties %}
@@ -96,7 +116,7 @@
                                     View Details	
                             </a>	
                             <button class="btn btn--heart" value="{{property.id}}">	
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>	
+                                <i class="fa fa-heart color-red" aria-hidden="true"></i>
                             </button>	
                         </div>	
                     </div>	
@@ -114,8 +134,8 @@
             $(document).on('click', '.btn--heart', function(e) {
                 e.preventDefault();
 
-                var $button = $(this);
-                var property_id = $button.val();
+                var buttonElement = $(this);
+                var property_id = buttonElement.val();
                 
                 $.ajax({
                     type: 'POST',
@@ -131,6 +151,19 @@
                     error: function(xhr, errmsg, err) {
                         console.log('Error occurred:', err)
                     }
+                });
+            });
+        </script>
+        <script>
+            // Get all the elements with the class 'btn--heart'
+            const heartButtons = document.querySelectorAll('.btn--heart');
+            heartButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const heartIcon = this.querySelector('.fa-heart'); // Find the .fa-heart icon within the clicked button
+                    heartIcon.classList.toggle('fa-heart-o');
+                    heartIcon.classList.toggle('color-red');
                 });
             });
         </script>
