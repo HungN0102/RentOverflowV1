@@ -28,5 +28,8 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='account/password/reset_password_complete.html'), name='password_reset_complete'),
     
     # update_favorite
-    path('update-favorite', views.update_favorite, name='update_favorite')
+    path('update-favorite', views.update_favorite, name='update_favorite'),
+
+    # membership
+    path('membership', views.membership, name='membership'),
 ]

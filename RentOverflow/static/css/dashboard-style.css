@@ -252,3 +252,8 @@ body {
     .account-menu {
       grid-template-columns: repeat(1, [col-start] min-content [col-end]);
       grid-template-rows: repeat(5, [col-start] min-content [col-end]); } }
+
+
+.container {
+  min-height: 45vh;
+}

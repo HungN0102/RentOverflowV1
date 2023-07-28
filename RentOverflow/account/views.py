@@ -155,3 +155,7 @@ def update_favorite(request):
 
     # Handle other cases if needed (e.g., GET request)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+@login_required(login_url='login')
+def membership(request):
+    return render(request, 'account/general/membership.html')
