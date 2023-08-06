@@ -229,8 +229,8 @@ function limitTextBasedOnScreenWidth() {
         var text = element.innerText;
         var words = text.split(' ');
         var limitedText = '';
-        if (words.length > 70) {
-            limitedText = words.slice(0, 70).join(' ') + '...';
+        if (words.length > 90) {
+            limitedText = words.slice(0, 90).join(' ') + '...';
         } 
         if (limitedText) {
             element.innerText = limitedText;
@@ -250,6 +250,7 @@ let dotMapColor = '#2e8a96'
 let fillMapColor = '#45a4b1'
 let fillMapOpacity= 0.5
 
+
 var map = L.map('map').setView([51.505, -0.09], 8);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -259,6 +260,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var polygon = null;
 var polygonCoordinates = [];
+var markerGroup = L.layerGroup().addTo(map);
 
 ////// Function to handle click events on the map
 function handleMapClick(event) {
@@ -270,6 +272,7 @@ function handleMapClick(event) {
     // If a polygon already exists, remove it from the map
     if (polygon) {
         map.removeLayer(polygon);
+        markerGroup.clearLayers();
     }
 
     // Create a new polygon with the updated coordinates and add it to the map
@@ -278,6 +281,18 @@ function handleMapClick(event) {
         fillColor: fillMapColor,
         fillOpacity: fillMapOpacity
     }).addTo(map);
+
+    // Add markers at each coordinate of the polygon
+    for (var i = 0; i < polygonCoordinates.length; i++) {
+        var marker = L.marker(polygonCoordinates[i], {
+            icon: L.divIcon({
+                className: 'square-marker',
+                iconSize: [10, 10],
+                html: '<div style="width: 10px; height: 10px; background-color: green;"></div>'
+            })
+        });
+        markerGroup.addLayer(marker);
+    } 
 }
 
 
@@ -292,6 +307,7 @@ function handleUndoButtonClick() {
     // If a polygon already exists, remove it from the map
     if (polygon) {
         map.removeLayer(polygon);
+        markerGroup.clearLayers();
     }
 
     // Create a new polygon with the updated coordinates and add it to the map
@@ -300,6 +316,18 @@ function handleUndoButtonClick() {
         fillColor: fillMapColor,
         fillOpacity: fillMapOpacity
     }).addTo(map);
+
+    // Add markers at each coordinate of the polygon
+    for (var i = 0; i < polygonCoordinates.length; i++) {
+        var marker = L.marker(polygonCoordinates[i], {
+            icon: L.divIcon({
+                className: 'square-marker',
+                iconSize: [10, 10],
+                html: '<div style="width: 10px; height: 10px; background-color: green;"></div>'
+            })
+        });
+        markerGroup.addLayer(marker);
+    } 
 }
 
 
@@ -312,6 +340,7 @@ function handleClearButtonClick() {
     // If a polygon already exists, remove it from the map
     if (polygon) {
         map.removeLayer(polygon);
+        markerGroup.clearLayers();
     }
 
     polygon = null
@@ -322,6 +351,18 @@ function handleClearButtonClick() {
         fillColor: fillMapColor,
         fillOpacity: fillMapOpacity
     }).addTo(map);
+
+    // Add markers at each coordinate of the polygon
+    for (var i = 0; i < polygonCoordinates.length; i++) {
+        var marker = L.marker(polygonCoordinates[i], {
+            icon: L.divIcon({
+                className: 'square-marker',
+                iconSize: [10, 10],
+                html: '<div style="width: 10px; height: 10px; background-color: green;"></div>'
+            })
+        });
+        markerGroup.addLayer(marker);
+    } 
 }
 
 // Attach the click event clear to the map
@@ -384,4 +425,16 @@ locationSearchInput.addEventListener('keypress', function (event) {
 });
 
 
-////////// 
+////////// Enter search whenever filter changes!   const autoUpdateSelects = document.querySelectorAll('.auto-update');
+const autoUpdateSelects = document.querySelectorAll('.auto-update');
+
+function handleSelectChange() {
+    // Programmatically trigger a click event on the submit button
+    const submitButton = document.querySelector('.header__form-btn--submit');
+    submitButton.click();
+}
+
+// Add event listener to each 'auto-update' select
+autoUpdateSelects.forEach(select => {
+    select.addEventListener('change', handleSelectChange);
+});

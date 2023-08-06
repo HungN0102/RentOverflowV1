@@ -25,3 +25,9 @@ class CreateUserForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=TextInput())
     password = forms.CharField(widget=PasswordInput())
+
+class ContactForm(forms.Form):
+    subject = forms.CharField(widget=TextInput())
+    name = forms.CharField(widget=TextInput())
+    email = forms.CharField(widget=TextInput())
+    message = forms.CharField(widget=forms.Textarea(attrs={'rows': 15}))

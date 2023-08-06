@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect,HttpResponse, HttpResponseRedirect
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, ContactForm
 
 from django.http import JsonResponse
 
@@ -159,3 +159,35 @@ def update_favorite(request):
 @login_required(login_url='login')
 def membership(request):
     return render(request, 'account/general/membership.html')
+
+# Create your views here.
+def contact_us(request):
+    form = ContactForm()
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        
+        if form.is_valid():
+            # Email verification setup
+            subject = request.POST.get('subject')
+            username = request.POST.get('name')
+            email = request.POST.get('email')
+            msg = request.POST.get('message')
+            
+            message = render_to_string('account/contact/contact_us_form.html', {
+                'username': username,
+                'email':email,
+                'message': msg,
+            })
+
+            send_mail(
+                subject + ' ' + email,
+                message,
+                "sudokaname070899@gmail.com",
+                ['lanngng2399@gmail.com'],
+                fail_silently=False,
+            )
+            return redirect('email_verification_sent')
+    context = {'form': form}
+    
+    return render(request, 'account/contact/contact_us.html', context=context)

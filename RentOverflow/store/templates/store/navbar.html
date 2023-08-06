@@ -8,11 +8,11 @@
             <ul class='navbar-ul'>
                 <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="{% url 'home' %}">Home</a></li>
                 <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="{% url 'property_list' %}">Search Property</a></li>
-                <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="">Contact Us</a></li>
+                <li class='navbar-li navbar-li-normal'><a class='navbar-a' href="{% url 'contact_us' %}">Contact Us</a></li>
                 {% if not user.is_authenticated %}
                     <li class='navbar-li navbar-li-login'><a class='navbar-a' href="{% url 'login' %}">Login</a></li>
                 {% else %}
-                    <li class='navbar-li navbar-li-login'><a class='navbar-a' href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class='navbar-li navbar-li-login'><a class='navbar-a' href="{% url 'dashboard' %}">My Account</a></li>
                 {% endif %}
             </ul>
         </div>

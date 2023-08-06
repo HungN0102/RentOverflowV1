@@ -32,4 +32,7 @@ urlpatterns = [
 
     # membership
     path('membership', views.membership, name='membership'),
+
+    # membership
+    path('contact-us', views.contact_us, name='contact_us'),
 ]

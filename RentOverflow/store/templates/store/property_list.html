@@ -52,7 +52,7 @@
                                         </label>
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>    
                                     </div>
-                                    <select id="min-price" class="form-control min-price" name="min-price">
+                                    <select id="min-price" class="form-control min-price auto-update" name="min-price">
                                         {% if min_price != 'None' %} 	
                                             <option selected>{{min_price}}</option>	
                                         {% else %} 	
@@ -98,7 +98,7 @@
                                         </label>
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </div>
-                                    <select id="max-price" class="form-control max-price" name="max-price">
+                                    <select id="max-price" class="form-control max-price auto-update" name="max-price">
                                         {% if max_price != 'None' %} 	
                                             <option selected>{{max_price}}</option>	
                                         {% else %} 	
@@ -145,7 +145,7 @@
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </div>
                                     
-                                    <select id="min-bed" class="form-control min-bed" name="min-bed">
+                                    <select id="min-bed" class="form-control min-bed auto-update" name="min-bed">
                                         {% if min_bed != 'None' %} 	
                                             <option selected>{{min_bed}}</option>	
                                         {% else %} 	
@@ -171,7 +171,7 @@
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     </div>
                                     
-                                    <select id="max-bed" class="form-control max-bed" name="max-bed">
+                                    <select id="max-bed" class="form-control max-bed auto-update" name="max-bed">
                                         {% if max_bed != 'None' %} 	
                                             <option selected>{{max_bed}}</option>	
                                         {% else %} 	
@@ -433,7 +433,7 @@
                         Back	
                     </a>	
                 {% else %}	
-                    <a href="" class="navigation-box">	
+                    <a href="{% url 'home' %}" class="navigation-box">	
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>	
                         Back	
                     </a>	
@@ -457,9 +457,7 @@
                 <div class="map">	
                     <div class="map-sticky">	
                         <div class="" id='map'>	
-                            <div class="map-edit">	
-                                <span>Draw your search area with dots and find properties within</span>	
-                            </div>	
+
                         </div>	
                         <div class="map-buttons">	
                             <button class="map-undo">Remove Last Point</button>	
@@ -474,6 +472,7 @@
         		
         {% include './footer.html' %}	
         <script src="{% static 'javascript/product-list.js' %}"></script>
+        <script src="{% static 'javascript/map.js' %}"></script>
         <script src="{% static 'javascript/navbar.js' %}"></script>
         <script>
             $(document).on('click', '.btn--heart', function(e) {

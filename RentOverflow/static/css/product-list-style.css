@@ -566,7 +566,7 @@ body {
 #sort option {
   width: 50%; }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1600px) {
   .overview {
     grid-column: center-start / sidebar-end;
     grid-row: point-2 / point-3; } }
@@ -757,7 +757,7 @@ body {
       .listing-bar .btn--heart:hover {
         background-color: #f2f2f2; }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1600px) {
   .product-list {
     grid-column: center-start / sidebar-end;
     grid-row: point-3 / point-4; } }
@@ -881,7 +881,7 @@ body {
     .sidebar {
       margin-right: 5rem; } }
   
-  @media only screen and (max-width: 1500px) {
+  @media only screen and (max-width: 1600px) {
     .sidebar {
       margin-top: 2rem;
       grid-column: center-start / sidebar-end;
@@ -951,7 +951,7 @@ body {
     border-bottom: 1px solid #333;
     width: 15rem; }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1600px) {
   .navigation {
     grid-column: center-start / sidebar-end;
     margin-bottom: 2rem; } }

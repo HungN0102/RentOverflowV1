@@ -29,14 +29,13 @@
 
 
         <div class="body-container">
-            <!-- <section class="navigation">
-                <a href="#">
+            <section class="navigation">
+                <a href="{% url 'property_list' %}{{ back_to_property_list_url }}" class="btn btn-primary">
                     <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                     &nbsp
                     Back to search result
                 </a>
-            </section> -->
-            <br>
+            </section>
             <section class="gallery">
                 <div class="listing">
                     <div class="listing-picture">
@@ -137,7 +136,7 @@
                 <div class="popup-box">	
                     <div class="popup-box--title">Copy this URL and share it!</div>	
                     <div class="popup-box--url">	
-                        <span id="urlToCopy">https://www.rightmove.co.uk/properties/137781044#/?channel=RES_LET</span>	
+                        <span id="urlToCopy">{{current_url}}</span>	
                     </div>	
                     <div class="popup-box--buttons">	
                         <button class="btn btn--copy">COPY URL</button>	

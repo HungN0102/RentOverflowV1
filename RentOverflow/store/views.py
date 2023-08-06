@@ -167,6 +167,24 @@ def property_list(request):
     page = request.GET.get('page')
     properties_page = p.get_page(page) 
 
+    request.session['property_filters'] = {
+        'page': page,
+        'search':search,
+        'min_bed': min_bed,
+        'max_bed': max_bed,
+        'min_price': min_price,
+        'max_price': max_price,
+        'sortSelect': sortSelect,
+        'polygonSearch':polygonSearch,
+        'added_date':added_date,
+        'property_type':property_type,
+        'pet_friendly':pet_friendly,
+        'parking':parking,
+        'garden':garden,
+        'furnish_type':furnish_type,
+        'distance_slider':distance_slider
+    }
+
 
     return render(request, 'store/property_list.html', {'properties': properties,
                                                         'search':search_location,
@@ -193,8 +211,29 @@ def property_info(request, pk):
     propertyGS = serialize('geojson', [property])
     context = {
         'property': property,
-        'propertyGS':propertyGS
+        'propertyGS':propertyGS,
+        'current_url': request.build_absolute_uri()
     }
+
+    filter_parameters = request.session.get('property_filters', {})
+    print(filter_parameters)
+    if filter_parameters:
+        back_to_property_list_url = f"?page={filter_parameters.get('page', filter_parameters.get('page', ''))}"
+        if filter_parameters.get('search', ''):
+            back_to_property_list_url += f"&location-search={filter_parameters.get('search', '')}"
+        back_to_property_list_url += f"&min-bed={filter_parameters.get('min_bed', '')}&max-bed={filter_parameters.get('max_bed', '')}"
+        back_to_property_list_url += f"&min-price={filter_parameters.get('min_price', '')}&max-price={filter_parameters.get('max_price', '')}"
+        back_to_property_list_url += f"&sortSelect={filter_parameters.get('sortSelect', '')}"
+        back_to_property_list_url += f"&polygonSearch={filter_parameters.get('polygonSearch', '')}"
+        back_to_property_list_url += f"&added-date={filter_parameters.get('added_date', '')}"
+        back_to_property_list_url += f"&property-type={filter_parameters.get('property_type', '')}"
+        back_to_property_list_url += f"&pet-friendly={filter_parameters.get('pet_friendly', '')}"
+        back_to_property_list_url += f"&parking={filter_parameters.get('parking', '')}"
+        back_to_property_list_url += f"&garden={filter_parameters.get('garden', '')}"
+        back_to_property_list_url += f"&furnish-type={filter_parameters.get('furnish_type', '')}"
+        back_to_property_list_url += f"&distance-slider={filter_parameters.get('distance_slider', '')}"
+
+        context['back_to_property_list_url'] = back_to_property_list_url
     
     return render(request, 'store/property_info.html', context)
 
