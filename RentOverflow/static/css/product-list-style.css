@@ -208,7 +208,7 @@ body {
   grid-column: full-start / full-end;
   grid-row: point-0 / point-1;
   position: sticky;
-  top: 0;
+  top: -.5rem;
   z-index: 10000;
   background-color: #ffffff;
   background-color: #333; }
