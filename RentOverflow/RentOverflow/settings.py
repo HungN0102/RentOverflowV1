@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-wm03(c@z64wsc@d$n=q#@2cg!nl#v72c6!%_5lnja*6=w^2m*9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['109.237.25.195','127.0.0.1','rentoverflow.com','www.rentoverflow.com']
 
 
 # Application definition
