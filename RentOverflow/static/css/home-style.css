@@ -271,7 +271,7 @@ body {
 .header {
   grid-column: full-start / full-end;
   height: 90vh;
-  background-image: linear-gradient(to right bottom, rgba(141, 135, 65, 0.4), rgba(237, 199, 183, 0.4)),url(../../media/images/home-comfortable.jpg);
+  background-image: linear-gradient(to right bottom, rgba(141, 135, 65, 0.4), rgba(237, 199, 183, 0.4)),url(../images/home-comfortable.jpg);
   background-size: cover;
   background-position: 50% 35%;
   position: relative;

@@ -41,7 +41,7 @@
                     <div class="listing-picture">
                         {% for image in property.image_set.all %}
                             <!-- Assuming each Image has a 'url' property, update this to match your Image model -->
-                            <img src="{% static 'media/' %}{{ image.image }}" class="slide" alt="">
+                            <img src="{{ image.image.url }}" class="slide" alt="">
                         {% endfor %}
                         <!-- <img src="{% static 'media/images/room1.jpg' %}" class="slide" alt="">
                         <img src="{% static 'media/images/london.jpg' %}" class="slide" alt="">
