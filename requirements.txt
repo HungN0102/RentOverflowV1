@@ -1,4 +1,5 @@
 asgiref==3.5.2
+backports.zoneinfo==0.2.1;python_version<"3.9"
 boto3==1.25.5
 botocore==1.28.5
 Django==4.1.2
@@ -10,14 +11,12 @@ django-storages==1.13.1
 django-utils-six==2.0
 djangorestframework==3.14.0
 djangorestframework-gis==1.0
-GDAL @ file:///C:/Users/Hung/Desktop/GDAL-3.4.3-cp39-cp39-win_amd64.whl
 geographiclib==2.0
 geopy==2.3.0
 gunicorn==20.1.0
 jmespath==1.0.1
 packaging==21.3
 Pillow==9.2.0
-psycopg2==2.9.6
 psycopg2-binary==2.9.5
 pyparsing==3.0.9
 python-dateutil==2.8.2
